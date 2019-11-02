@@ -1,3 +1,6 @@
+# Comment data
+/Data/Comments/*
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
