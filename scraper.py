@@ -9,8 +9,9 @@ Uses Anaconda environment "webby" with selenium to load JavaScript on the page
     - Switch to environment: `conda activate webby`
     - Run script: `python scraper.py`
     - Deactivate the environment when done: `conda deactivate`
-Note: the scraper takes several hours to run - there are over 8,000 comments
-    and the program bakes in sleep time to allow the page to load
+Note: depending on the system, the scraper can take ~1 day to run - there are
+    over 8,000 comments and the program bakes in sleep time to allow the page
+    to load
 '''
 
 
@@ -61,8 +62,14 @@ def scrape_comments(csv_file_path, css_sel, out_path):
             inHTML = browser.execute_script("return document.body.innerHTML")
             soup = bs4.BeautifulSoup(inHTML, features="lxml")
             elem = soup.select(css_sel)
-            comment = elem[0].text
-            # print(comment)
+
+            try:
+                comment = elem[0].text
+                # print(comment)
+            except IndexError as e:
+                print('Error processing comment: {}'.format(ID))
+                print(e)
+                continue
 
             # Save ID and comment to a text file
             file_path = out_path + '{}.txt'.format(ID)
