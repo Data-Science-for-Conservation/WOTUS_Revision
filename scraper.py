@@ -69,6 +69,7 @@ def scrape_comments(csv_file_path, css_sel, out_path):
             except IndexError as e:
                 print('Error processing comment: {}'.format(ID))
                 print(e)
+                browser.quit()
                 continue
 
             # Save ID and comment to a text file
