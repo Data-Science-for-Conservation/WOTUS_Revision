@@ -1,6 +1,9 @@
 # Comment data
 /Data/Comments/*.txt
 
+# Pickled DataFrame
+*.pkl
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
