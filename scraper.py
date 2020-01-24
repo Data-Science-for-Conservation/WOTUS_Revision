@@ -1,4 +1,4 @@
-#!/usr/local/bin/python
+#!/usr/bin/env python3
 
 '''
 Uses Anaconda environment "webby" with Selenium (to load JavaScript on the page
