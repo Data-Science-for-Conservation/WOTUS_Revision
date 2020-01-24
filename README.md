@@ -6,19 +6,26 @@ The agencies have since conducted a reevaluation and revision of the definition 
 
 This project aims to analyze the content of comments that are publicly available on the [regulations.gov web page](https://www.regulations.gov/docket?D=EPA-HQ-OW-2018-0149) for this docket. It runs a web scraping program (`./scraper.py`) to loop over all docket public submissions that didn't contain an attachment, collect the text of the comment, then save each as a text file under `./Data/Comments/`. It then applies Natural Language Processing (NLP) techniques using a combination of [Scikit-Learn, NLTK and spaCy].
 
-## Setting Up the Environment to Run the Scraper
+## Setting Up the Local Environment and Running the Scraper
 
-This project uses the [Anaconda distribution](https://www.anaconda.com/distribution/) to manage Python packages. An environment with all necessary packages to run `scraper.py` is saved in `./environment.yml`. Run the following commands from your local project directory to create the `webby` environment locally, activate it, then run the scraper:
+This project uses the [Anaconda distribution](https://www.anaconda.com/distribution/) to manage Python packages. An environment with all necessary packages to run `scraper.py` is saved in `./environment.yml`. If you're using Anaconda as well, you can run the following commands to create the `webby` environment locally.
 
 ```bash
 conda env create --file environment.yml
-conda activate webby
-python scraper.py
 ```
 
 (If you don't like the name `webby`, you can edit the first line of your local version of the `environment.yml` file and change it to whatever name you'd prefer.)
 
-Depending on the system, the scraper takes \~1 day to run - there are over 8,000 comments and the program bakes in delay time to allow the page to load.
+Because the scraper uses the Selenium webdriver to control a browser, you'll also need to download the appropriate webdriver executable and add it to your local `PATH`. Popular options are Firefox's [geckodriver](https://github.com/mozilla/geckodriver/) or Chromium's [chromedriver](https://sites.google.com/a/chromium.org/chromedriver/), with [other browser support found here](https://selenium.dev/documentation/en/getting_started_with_webdriver/browsers/).
+
+To actually run the scraper, first clone the project and navigate to it in your local directory. Then use the following commands to activate the environment and run the scraper:
+
+```bash
+conda activate webby
+python scraper.py
+```
+
+Depending on the system, the scraper takes \~1.5-2 days to run - there are over 8,000 comments and the program bakes in delay time to allow the page to load.
 
 Notes:
 

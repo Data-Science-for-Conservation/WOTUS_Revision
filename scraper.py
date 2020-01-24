@@ -1,17 +1,21 @@
 #!/usr/local/bin/python
 
 '''
-Uses Anaconda environment "webby" with selenium to load JavaScript on the page
-    and get content:
+Uses Anaconda environment "webby" with Selenium (to load JavaScript on the page
+    with the content), then Beautiful Soup to parse the HTML:
     - Navigate into the project folder
     - Create environment:
         `conda env create --file environment.yml`
     - Switch to environment: `conda activate webby`
     - Run script: `python scraper.py`
     - Deactivate the environment when done: `conda deactivate`
-Note: depending on the system, the scraper can take ~1 day to run - there are
-    over 8,000 comments and the program bakes in sleep time to allow the page
-    to load
+Notes:
+1) Depending on your system, the scraper may take ~1.5-2 days to run - there
+    are over 8,000 comments and the program bakes in sleep time to allow the
+    page to load
+2) Web scrapers are brittle by nature - changes to the HTML structure of the
+    target webpage can break the scraper. Always check that the path to the
+    unique element the scraper targets is updated in the script
 '''
 
 
@@ -32,15 +36,16 @@ def main():
 
 def scrape_comments(csv_file_path, css_sel, out_path):
     '''
-    Web scraper that loops over a CSV file located at csv_file_path, grabs text
-    from css_sel element on page, and saves ID and text as a text file to
-    out_path using the ID as the file name
+    The web scraper loops over a CSV file located at `csv_file_path` that has
+    unique web addresses for each comment, grabs text from `css_sel element` on
+    the page, and saves the comment's ID and text as a text file to `out_path`
+    using the ID as the file name.
 
     :param csv_file_path: path to a CSV-formatted file with two columns - a
         comment ID and the URL to that comment. Assumes CSV has a header row
     :param css_sel: CSS selector path to the element containing the targeted
         text at the given URL
-    :param out_path:
+    :param out_path: path where to save each comment as a text file
 
     :return: None
 
