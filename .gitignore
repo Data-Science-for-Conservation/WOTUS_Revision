@@ -1,5 +1,6 @@
 # Comment data
 /Data/Comments/*.txt
+/Data/*comments*
 
 # Pickled DataFrame
 *.pkl
