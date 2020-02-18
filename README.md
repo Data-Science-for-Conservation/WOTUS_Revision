@@ -1,10 +1,12 @@
 # Analysis of Public Comments Regarding the EPA's Revised Definition of "Waters of the United States" (WOTUS)
 
-In early 2017, President Trump signed an Executive Order<sup>[1](#footnote1)</sup> requesting that agencies review a 2015 rule regarding the "Waters of the United States". The agencies, including the Environmental Protection Agency (EPA) and the Department of the Army, were instructed to rescind or replace the rule, in accordance with law.
+In early 2017, President Trump signed an Executive Order<sup>[1](#footnote1)</sup> requesting that agencies review a 2015 rule put in place by the Obama administration regarding the "Waters of the United States". The agencies, including the Environmental Protection Agency (EPA) and the Department of the Army, were instructed to rescind or replace the rule, in accordance with law.
 
-The agencies have since conducted a reevaluation and revision of the definition of "Waters of the United States". Their proposed rule redefines the scope of waters federally regulated under the Clean Water Act (CWA). This rule was open for public comment until April 15, 2019.
+The agencies have since conducted a reevaluation and revision of the definition of WOTUS. Their proposed rule redefined the scope of waters federally regulated under the Clean Water Act (CWA). (In other words, it changes which waterways fall under federal authority.) The re-definition was open for public comment until April 15, 2019, and the revised rule took effect on December 23, 2019.
 
-This project aims to analyze the content of comments that are publicly available on the [regulations.gov web page](https://www.regulations.gov/docket?D=EPA-HQ-OW-2018-0149) for this docket. It runs a web scraping program (`./scraper.py`) to loop over all docket public submissions that didn't contain an attachment, collect the text of the comment, then save each as a text file under `./Data/Comments/`. It then applies Natural Language Processing (NLP) techniques using a combination of [Scikit-Learn, NLTK and spaCy].
+This project analyzes the content of comments that are publicly available in the docket on the [regulations.gov web page](https://www.regulations.gov/docket?D=EPA-HQ-OW-2018-0149). The comments were collected by running a web scraping program (`./scraper.py`) which looped over all public submissions in the docket that didn't contain an attachment. Once the data were collected, a variety of Natural Language Processing (NLP) techniques were applied. These included topic analysis, clustering, and similarity analysis. As this is an un-labeled dataset, it wasn't possible to apply supervised learning techniques such as classification, sentiment analysis, or transfer learning.
+
+Visit the [repository website](https://data-science-for-conservation.github.io/WOTUS_Revision/) for a summary of the analysis performed and project takeaways.
 
 ## Setting Up the Local Environment and Running the Scraper
 
