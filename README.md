@@ -8,9 +8,16 @@ The agencies have since conducted a reevaluation and revision of the definition 
 
 This project analyzes the content of the comments that are publicly available in docket EPA-HQ-OW-2018-0149 on the [regulations.gov web page](https://www.regulations.gov/docket?D=EPA-HQ-OW-2018-0149). The comments were collected by running a web scraping program (`./scraper.py`) which looped over all public submissions in the docket that weren't contained in an attachment. This resulted in a dataset of just over 8K comments. Once the data were collected, a variety of Natural Language Processing (NLP) techniques were applied. These included topic analysis, clustering, and (after manually labeling a sample set) classification and sentiment analysis.
 
+## Project Analysis
+
+You can find all underlying analysis and code relating to this project in the [WOTUS_analysis notebook](./WOTUS_analysis.ipynb).
+
 <!--
-Visit the [repository website](https://data-science-for-conservation.github.io/WOTUS_Revision/) for a summary of the analysis performed and project takeaways.
+The full write-up, including interactive models, is [depolyed here]().
 -->
+
+An interactive plot and summary of the topic analysis can be found at the [repository's GitHub page](https://data-science-for-conservation.github.io/WOTUS_Revision/).
+
 
 ## Project Challenges
 
