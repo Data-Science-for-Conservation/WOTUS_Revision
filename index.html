@@ -1,9 +1,25 @@
 <head>
 <link rel="stylesheet" type="text/css" href="https://cdn.rawgit.com/bmabey/pyLDAvis/files/ldavis.v1.0.0.css">
+<link rel="stylesheet" type="text/css" href="./index.css">
 </head>
 
 <body>
   <h1>Topic Analysis with Latent Dirichlet Allocation</h1>
+  <div id="intro">
+    <p> The following topics were generated using a Latent Dirichlet Allocation (LDA) model in Scikit-Learn on the entire training set. LDA is a statistical model that finds the different mix of <code>n</code> topics that explain each comment. Comparing the perplexity metrics across models that use increasing number of <code>n</code> topics can help determine the appropriate number of topics for the dataset.</p>
+    <p><a hrer="https://en.wikipedia.org/wiki/Perplexity">Wikipedia's article</a> defines perplexity as:</p>
+
+    <blockquote>In information theory, **perplexity** is a measurement of how well a probability distribution or probability model predicts a sample. It may be used to compare probability models. A low perplexity indicates the probability distribution is good at predicting the sample.</blockquote>
+
+    <p>Since perplexity will continue to drop as the number of topics increases, one way to determine an appropriate topic count is to look for the "elbow" in a chart of scores by topic.</p>
+
+    <p>
+      <img src="./Figures/LDA_Perplexity_for_nTopics.png">
+    </p>
+
+    <p>In the above chart, the sharpest decline in perplexity happens from two to eight topics, with a flattening of the curve thereafter. The chart indicates that around eight topics is where the law of diminishing returns to improve perplexity kicks in. The model was set to eight topics, which were then qualitatively analyzed to further garner insight into the dataset.</p>
+  </div>
+
   <div id="ldavis_el336141128775838403788339513"></div>
   <script type="text/javascript">
 
@@ -43,6 +59,7 @@ if(typeof(LDAvis) !== "undefined"){
 </script>
 
   <h2>Topic Summary</h2>
+  <div id="summary">
   <p>
     The comments in the dataset tended to share a lot of language, so the most frequent words show up in many of the topics. This makes it hard to distinguish the topics with top words alone.
   </p>
@@ -65,4 +82,5 @@ if(typeof(LDAvis) !== "undefined"){
 
     <li>Commenters making arguments to protect the western states where temporary waterways and ephemeral streams are the norm, and that the new rule will leave them unprotected</li>
   </ol>
+  </div>
 </body>
