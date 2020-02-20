@@ -10,13 +10,13 @@ This project analyzes the content of the comments that are publicly available in
 
 ## Project Analysis
 
-You can find all underlying analysis and code relating to this project in the [WOTUS_analysis notebook](./WOTUS_analysis.ipynb).
+You can find all underlying analysis and code relating to this project in the [WOTUS_analysis Jupyter notebook](./WOTUS_analysis.ipynb).
 
 <!--
-The full write-up, including interactive models, is [depolyed here]().
+You can review the full project write-up, including interactive models [here]().
 -->
 
-An interactive plot and summary of the topic analysis can be found at the [repository's GitHub page](https://data-science-for-conservation.github.io/WOTUS_Revision/).
+You can view an interactive plot and summary of the topic analysis on the [repository's GitHub page](https://data-science-for-conservation.github.io/WOTUS_Revision/).
 
 
 ## Project Challenges
