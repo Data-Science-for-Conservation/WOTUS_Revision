@@ -4,8 +4,10 @@
 </head>
 
 <body>
-  <h1>Topic Analysis with Latent Dirichlet Allocation</h1>
-  <div id="intro">
+  <h1>Topic Analysis</h1>
+
+    <h2>Analyzing Topics with Latent Dirichlet Allocation</h2>
+
     <p> The following topics were generated using a Latent Dirichlet Allocation (LDA) model in Scikit-Learn on the entire training set. LDA is a statistical model that finds the different mix of <code>n</code> topics that explain each comment. Comparing the perplexity metrics across models that use increasing number of <code>n</code> topics can help determine the appropriate number of topics for the dataset.</p>
     <p><a hrer="https://en.wikipedia.org/wiki/Perplexity">Wikipedia's article</a> defines perplexity as:</p>
 
@@ -18,7 +20,7 @@
     </p>
 
     <p>In the above chart, the sharpest decline in perplexity happens from two to eight topics, with a flattening of the curve thereafter. The chart indicates that around eight topics is where the law of diminishing returns kicks in thus further improvements to perplexity are minimal. The model was set to eight topics, which were then qualitatively analyzed to further garner insight into the dataset.</p>
-  </div>
+
 
   <div id="ldavis_el336141128775838403788339513"></div>
   <script type="text/javascript">
@@ -58,8 +60,8 @@ if(typeof(LDAvis) !== "undefined"){
 }
 </script>
 
-  <h2>Topic Summary</h2>
-  <div id="summary">
+  <h2>LDA Topic Summary</h2>
+
   <p>
     The comments in the dataset tend to share a lot of language, so the most frequent words show up in many of the topics. This makes it hard to distinguish the topics with top words alone.
   </p>
@@ -76,5 +78,7 @@ if(typeof(LDAvis) !== "undefined"){
     <li>Commenters making arguments that the rule change will diminish outdoor recreation experiences and can affect parks, nature, and wildlife. Also argues to protect arid locations</li>
     <li>Commenters making arguments to protect temporary waterways and ephemeral streams, with mentions of Western states, and that the new rule will leave these waterways unprotected</li>
   </ol>
-  </div>
+
+  <h2>Finding Similar Comments via Non-negative Matrix Factorization</h2>
+  <p></p>
 </body>
