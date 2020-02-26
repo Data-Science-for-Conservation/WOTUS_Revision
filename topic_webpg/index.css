@@ -4,10 +4,12 @@
 
 body {
   font: 400 14px/1.5 "Roboto", sans-serif;
+  max-width: 1000px;
 }
 
 blockquote {
-  /*font: 14px/22px normal helvetica, sans-serif;*/
+  max-width: 900px;
+  font: 14px/22px normal "Roboto", sans-serif;
   margin-top: 10px;
   margin-bottom: 10px;
   margin-left: 50px;
@@ -31,10 +33,6 @@ thead {
   color: #7196b9;
   background: #f7fafc;
 
-}
-
-tbody tr:nth-child(odd) {
-  background: #eee;
 }
 
 th {
