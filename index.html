@@ -17,8 +17,8 @@
 
     <h2>Analyzing Topics with Latent Dirichlet Allocation</h2>
 
-    <p> The following topics were generated using a Latent Dirichlet Allocation (LDA) model in Scikit-Learn on the entire training set. LDA is a statistical model that finds the different mix of <code>n</code> topics that explain each comment. Comparing the perplexity metrics across models that use increasing number of <code>n</code> topics can help determine the appropriate number of topics for the dataset.</p>
-    <p><a hrer="https://en.wikipedia.org/wiki/Perplexity">Wikipedia's article</a> defines perplexity as:</p>
+    <p> The following topics were generated using a Latent Dirichlet Allocation (LDA) model in Scikit-Learn on the entire training set. LDA is a statistical model that finds the different mix of <code>n</code> topics that explain the comments in the collection. A <code>perplexity</code> metric allows you to compare models to help determine the appropriate number of topics for the dataset.</p>
+    <p><a href="https://en.wikipedia.org/wiki/Perplexity">Wikipedia's article</a> defines <code>perplexity</code> as:</p>
 
     <blockquote>In information theory, <bold>perplexity</bold> is a measurement of how well a probability distribution or probability model predicts a sample. It may be used to compare probability models. A low perplexity indicates the probability distribution is good at predicting the sample.</blockquote>
 
@@ -78,7 +78,7 @@
     Cosine similarity is a simple application of a math concept to test how similar comments (or any documents) are to each other. The training data term-frequency matrix rows represent a vector for each comment, where the values in the vector align with how many times certain vocabulary words show up in that comment. Comments with similar vocabulary will have similar vectors, and will therefore point in similar directions in hyperspace.
   </p>
   <p>
-    The <code>cosine</code> of the angle created between any two comment vectors can indicate how similar their vocabulary is - the smaller the angle between the vectors, the higher the value of the <code>cosine(angle)</code> is (recall that <code>cosine(0) = 1</code>, which is the maximum bound of the function). Therefore, high cosine values indicate similarity. Likewise, as the language between comments diverges, that angle becomes larger, and the cosine value moves closer to zero. Because NMF doesn't allow for negative values, the resulting <code>cosine</code> values never go below zero.
+    The <code>cosine</code> of the angle created between any two comment vectors can indicate how similar their vocabulary is - the smaller the angle between the vectors, the higher the value of the <code>cosine(angle)</code> is (recall that <code>cosine(0) = 1</code>, which is the upper bound of the function's range). Therefore, high cosine values indicate similarity. Likewise, as the language between comments diverges, that angle becomes larger, and the cosine value moves closer to zero. Because NMF doesn't allow for negative values, the resulting <code>cosine</code> values never go below zero.
   </p>
   <p>
     Two labeled comments (one supportive and one opposing) were randomly selected from the test set and run through the NMF pipeline. The tables below show the most similar comments in the training set as well as the <code>cosine</code> value between the test comment and those training comments. Note that personally identifying information about the commenter (such as their address) was removed from some comments.

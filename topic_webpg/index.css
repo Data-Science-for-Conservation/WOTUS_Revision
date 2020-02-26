@@ -1,5 +1,5 @@
 body {
-  font: 400 14px/1.5 "Roboto", sans-serif;
+  font: 400 16px/1.5 "Roboto", sans-serif;
   max-width: 1000px;
 }
 
@@ -28,7 +28,6 @@ thead {
   border-bottom: 2px solid #c6d5e3;
   color: #7196b9;
   background: #f7fafc;
-
 }
 
 th {
