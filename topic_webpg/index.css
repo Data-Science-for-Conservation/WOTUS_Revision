@@ -1,11 +1,11 @@
 body {
-  font: 400 16px "Roboto", sans-serif;
+  font: 400 16px/1.5 "Roboto", sans-serif;
   max-width: 1000px;
 }
 
 blockquote {
   max-width: 900px;
-  font: 14px/22px normal "Roboto", sans-serif;
+  font: 14px/22px "Roboto", sans-serif;
   margin-top: 10px;
   margin-bottom: 10px;
   margin-left: 50px;
@@ -19,6 +19,7 @@ blockquote {
 }
 
 table {
+  font-size: 14px;
   border-collapse: collapse;
   width: 100%;
   border-bottom: 2px solid #c6d5e3;
@@ -40,10 +41,6 @@ tr:not(:last-of-type) {
 
 td {
   padding: 16px 12px 14px;
-}
-
-td:not(:last-of-type) {
-  border-right: 1px solid #eaeaea;
 }
 
 td.comment {
