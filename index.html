@@ -13,12 +13,12 @@
   <title>WOTUS Topic Analysis</title>
 </head>
 <body>
-  <h1>Topic Analysis</h1>
+  <h1>WOTUS Public Comments Topic Analysis</h1>
 
     <h2>Analyzing Topics with Latent Dirichlet Allocation</h2>
 
-    <p> The following topics were generated using a Latent Dirichlet Allocation (LDA) model in Scikit-Learn on the entire training set. LDA is a statistical model that finds the different mix of <code>n</code> topics that explain the comments in the collection. A <code>perplexity</code> metric allows you to compare models to help determine the appropriate number of topics for the dataset.</p>
-    <p><a href="https://en.wikipedia.org/wiki/Perplexity">Wikipedia's article</a> defines <code>perplexity</code> as:</p>
+    <p> The following topics were generated using a Latent Dirichlet Allocation (LDA) model in Scikit-Learn on the entire training set. LDA is a statistical model to find the different mix of <code>n</code> topics that comprise the comments in the collection. The user needs to supply the number of topics, which isn't always clear in an un-labeled dataset. Fortunately there's a <code>perplexity</code> metric, which allows you to compare models using a varying <code>n</code> number of topics to help determine the appropriate topic count for the dataset.</p>
+    <p><a href="https://en.wikipedia.org/wiki/Perplexity">Wikipedia</a> defines <code>perplexity</code> as:</p>
 
     <blockquote>In information theory, <bold>perplexity</bold> is a measurement of how well a probability distribution or probability model predicts a sample. It may be used to compare probability models. A low perplexity indicates the probability distribution is good at predicting the sample.</blockquote>
 
@@ -43,34 +43,36 @@
     However, reviewing exemplary comments per topic and adjusting the values for lambda with the relevance metric slider (in the right-hand chart) helped to identify the general theme for a selected topic. Below is a summary of the key words and themes per topic:
   </p>
 
-  <ol>
-    <li>
-      These comments make general requests to protect headwaters, intermittent and ephemeral streams, and waterways. They use science-based arguments that relate to definitions and exclusions in the rule change, like navigable waters, groundwater, surface water, and the connectedness of the water system in general. They also argue for wildlife and habitat
-    </li>
-    <li>
-      This topic leans more politically than others while making similar points about using the latest science to protect waterways as the first topic. It also references specific regions, like the South and West, that would be left vulnerable. There are requests to reconsider the "risky" proposal, and notes that the CWA is a bipartisan success story and should remain intact
-    </li>
-    <li>
-      This topic is a catch-all for supporters of the rule change. There are comments from farmers and ranchers who want "clean water and clear (or common-sense) rules" and landowners pushing for property rights. These are people who mention they are using responsible farming techniques on their land and want clarity on what waterways are federally regulated
-    </li>
-    <li>
-      These comments opposed the proposed "dirty water" rule by making scientific arguments, sometimes noting the environmental threats like pollution, increased flood risk, and health and safety issues when regulations are loosened and the additional cost of clean-ups. They request the EPA abandon the dangerous rollback of the CWA and focus on protecting waterways
-    </li>
-    <li>
-      This topic includes environmental arguments about the importance of headwater, the risk to downstream users when there's water issues, and that the EPA needs to continuously protect water using available science. It also notes that future generations will need to deal with any repercussions of the rule change
-    </li>
-    <li>
-      This topic says clean water is a right and necessity in life, we all need it to live, and the government and its bureaucrats are responsible for protecting it for its citizens. It also notes the proposed rule undermines the CWA and doesn't establish a universal definition of federally protected waterways. Finally, it mentions the need to look to the future to see what we're leaving to our children
-    </li>
-    <li>
-      This topic covers arguments that the rule change will diminish outdoor recreation experiences and can affect parks, nature, wildlife, coastal waters, and the health of communities. The comments note flourishing outdoor economies that are supported by clean waterways
-    </li>
-    <li>
-      Commenters saying "we need to do more, not less to protect clean water" and that the CWA is a "bedrock environmental law". They make arguments to protect temporary waterways and ephemeral streams, with mentions of Western states, and that the new rule will leave these waterways unprotected. It warns against polluting industries and that the rule change puts profits ahead of the environment
-    </li>
-  </ol>
+  <div class="list_container">
+    <ol>
+      <li>
+        These comments make general requests to protect headwaters, intermittent and ephemeral streams, and waterways. They use science-based arguments that relate to definitions and exclusions in the rule change, like navigable waters, groundwater, surface water, and the connectedness of the water system in general. They also argue for wildlife and habitat
+      </li>
+      <li>
+        This topic leans more politically than others while making similar points about using the latest science to protect waterways as the first topic. It also references specific regions, like the South and West, that would be left vulnerable. There are requests to reconsider the "risky" proposal, and notes that the CWA is a bipartisan success story and should remain intact
+      </li>
+      <li>
+        This topic is a catch-all for supporters of the rule change. There are comments from farmers and ranchers who want "clean water and clear (or common-sense) rules" and landowners pushing for property rights. These are people who mention they are using responsible farming techniques on their land and want clarity on what waterways are federally regulated
+      </li>
+      <li>
+        These comments opposed the proposed "dirty water" rule by making scientific arguments, sometimes noting the environmental threats like pollution, increased flood risk, and health and safety issues when regulations are loosened and the additional cost of clean-ups. They request the EPA abandon the dangerous rollback of the CWA and focus on protecting waterways
+      </li>
+      <li>
+        This topic includes environmental arguments about the importance of headwater, the risk to downstream users when there's water issues, and that the EPA needs to continuously protect water using available science. It also notes that future generations will need to deal with any repercussions of the rule change
+      </li>
+      <li>
+        This topic says clean water is a right and necessity in life, we all need it to live, and the government and its bureaucrats are responsible for protecting it for its citizens. It also notes the proposed rule undermines the CWA and doesn't establish a universal definition of federally protected waterways. Finally, it mentions the need to look to the future to see what we're leaving to our children
+      </li>
+      <li>
+        This topic covers arguments that the rule change will diminish outdoor recreation experiences and can affect parks, nature, wildlife, coastal waters, and the health of communities. The comments note flourishing outdoor economies that are supported by clean waterways
+      </li>
+      <li>
+        Commenters saying "we need to do more, not less to protect clean water" and that the CWA is a "bedrock environmental law". They make arguments to protect temporary waterways and ephemeral streams, with mentions of Western states, and that the new rule will leave these waterways unprotected. It warns against polluting industries and that the rule change puts profits ahead of the environment
+      </li>
+    </ol>
+  </div>
 
-  <h2>Finding Similar Comments via Non-negative Matrix Factorization</h2>
+  <h2>Finding Similar Comments via Non-Negative Matrix Factorization</h2>
   <p>
     An eight-topic non-negative matrix factorization (NMF) model was fit to the training data. The topics closely matched the ones the LDA model found, but the goal for this model was to calculate cosine similarity on normalized comment vectors in order to find similar comments. This could then be applied to perform either batch-labeling (find the similar comments to a known, labeled one), or to find similar comments to an unseen, new one.
   </p>
@@ -78,13 +80,13 @@
     Cosine similarity is a simple application of a math concept to test how similar comments (or any documents) are to each other. The training data term-frequency matrix rows represent a vector for each comment, where the values in the vector align with how many times certain vocabulary words show up in that comment. Comments with similar vocabulary will have similar vectors, and will therefore point in similar directions in hyperspace.
   </p>
   <p>
-    The <code>cosine</code> of the angle created between any two comment vectors can indicate how similar their vocabulary is - the smaller the angle between the vectors, the higher the value of the <code>cosine(angle)</code> is (recall that <code>cosine(0) = 1</code>, which is the upper bound of the function's range). Therefore, high cosine values indicate similarity. Likewise, as the language between comments diverges, that angle becomes larger, and the cosine value moves closer to zero. Because NMF doesn't allow for negative values, the resulting <code>cosine</code> values never go below zero.
+    The <code>cosine</code> of the angle created between any two comment vectors can indicate how similar their vocabulary is - the smaller the angle between the vectors, the higher the value of the <code>cosine(angle)</code> is (recall that <code>cosine(0) = 1</code>, which is the upper bound of the function's range). Therefore, cosine values near one indicate similarity. Likewise, as the language between comments diverges, that angle becomes larger, and the cosine value moves closer to zero. Because NMF doesn't allow for negative values, the resulting <code>cosine</code> values never go below zero.
   </p>
   <p>
     Two labeled comments (one supportive and one opposing) were randomly selected from the test set and run through the NMF pipeline. The tables below show the most similar comments in the training set as well as the <code>cosine</code> value between the test comment and those training comments. Note that personally identifying information about the commenter (such as their address) was removed from some comments.
   </p>
 
-  <h3>Similarities for an Example Supportive Comment</h3>
+  <h3>Similar Training Comments vs. an Example Supportive Comment</h3>
 
   <blockquote>
     "As a farmer, I need to be able to look at waterways on my land and know immediately if it is or is not federally regulated. The proposed new water rule should make this so. I support the proposed Waters of the US rules."
@@ -95,7 +97,7 @@
       <thead>
         <tr>
           <th scope="col">Cosine Value</th>
-          <th scope="col">Comment Text</th>
+          <th class="com_txt" scope="col">Comment Text</th>
         </tr>
       </thead>
       <tbody>
@@ -123,7 +125,7 @@
     </table>
   </div>
 
-  <h3>Similarities for an Example Opposing Comment</h3>
+  <h3>Similar Training Comments vs. an Example Opposing Comment</h3>
 
   <blockquote>
     "I am urging the EPA and Army Corps of Engineers to adopt the 2015 Clean Water Rule and abandon the revised WOTUS rule. The Clean Water Rule needs to protect ephemeral waters and wetlands, not limited to the "navigable waters" currently defined, since by nature water is ephemeral and is not contained in one area. Pollution in one area potentially pollutes unlimited areas. Not only is lack of protection a danger to human and animal health, it's also economically unfeasible, considering affects on drinking water. Additionally, loss of wetlands can take decades to restore."
@@ -134,7 +136,7 @@
       <thead>
         <tr>
           <th scope="col">Cosine Value</th>
-          <th scope="col">Comment Text</th>
+          <th class="com_txt" scope="col">Comment Text</th>
         </tr>
       </thead>
       <tbody>

@@ -1,16 +1,37 @@
 body {
-  font: 400 16px/1.5 "Roboto", sans-serif;
-  max-width: 1000px;
+  font: 16px/1.5 "Roboto", sans-serif;
+  max-width: 1060px;
+  margin-left: 20px;
+}
+
+h1 {
+  font-size: 2em;
+  margin-bottom: 20px;
+  border-bottom: 3px solid #1f78b4;
+}
+
+a {
+  font-weight: bold;
+  color: black;
+  text-decoration: none;
 }
 
 blockquote {
   max-width: 900px;
-  font: 14px/22px "Roboto", sans-serif;
+  font: 14px/1.5 "Roboto", sans-serif;
   margin-top: 10px;
   margin-bottom: 10px;
   margin-left: 50px;
   padding-left: 15px;
-  border-left: 3px solid #ccc;
+  border-left: 3px solid #1f78b4;
+}
+
+.list_container {
+  max-width: 960px;
+}
+
+li {
+  margin-bottom: 10px;
 }
 
 .table_container {
@@ -22,17 +43,22 @@ table {
   font-size: 14px;
   border-collapse: collapse;
   width: 100%;
-  border-bottom: 2px solid #c6d5e3;
+  border-bottom: 2px solid #1f78b4;
 }
 
 thead {
-  border-bottom: 2px solid #c6d5e3;
+  border-bottom: 2px solid #1f78b4;
   color: #7196b9;
   background: #f7fafc;
 }
 
 th {
   padding: 10px 12px 8px;
+}
+
+th.com_txt {
+  text-align: left;
+  vertical-align: bottom;
 }
 
 tr:not(:last-of-type) {
