@@ -34,7 +34,7 @@
   <div id="ldavis_el336141128775838403788339513"></div>
   <script type="text/javascript" src="./topic_webpg/LDA_script.js"></script>
 
-  <h2>LDA Topic Summary</h2>
+  <h3>LDA Topic Summary</h3>
 
   <p>
     The comments in the dataset tend to share a lot of language, so the most frequent words extend across many of the topics. This makes it hard to distinguish the topics with top words alone.
@@ -73,6 +73,7 @@
   </div>
 
   <h2>Finding Similar Comments via Non-Negative Matrix Factorization</h2>
+
   <p>
     An eight-topic non-negative matrix factorization (NMF) model was fit to the training data. The topics closely matched the ones the LDA model found, but the goal for this model was to calculate cosine similarity on normalized comment vectors in order to find similar comments. This could then be applied to perform either batch-labeling (find the similar comments to a known, labeled one), or to find similar comments to an unseen, new one.
   </p>
@@ -163,4 +164,14 @@
       </tbody>
     </table>
   </div>
+
+  <h2>Conclusions</h2>
+
+  <p>
+    Overall, the LDA model found relevant topics spanning the dataset. These topics were also confirmed while a sample of 1,200 comments were read and labeled for the sentiment analysis task. There were a few one-off comments that made points outside the eight categories, but they seemed to be the exception over the norm.
+  </p>
+  <p>
+    The NMF model also proved useful as an efficient way to identify similar comments. This functionality could be extended to batch label comments to broaden the labeled set, allowing for the use of more complex modeling options for the sentiment analysis.
+  </p>
+
 </body>
