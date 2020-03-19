@@ -1,18 +1,18 @@
 #!/usr/bin/env python3
 
 '''
-Uses Anaconda environment "webby" with Selenium (to load JavaScript on the page
+Uses Anaconda environment "wotus" with Selenium (to load JavaScript on the page
     with the content), then Beautiful Soup to parse the HTML:
     - Navigate into the project folder
     - Create environment:
         `conda env create --file environment.yml`
-    - Switch to environment: `conda activate webby`
+    - Switch to environment: `conda activate wotus`
     - Run script: `python scraper.py`
     - Deactivate the environment when done: `conda deactivate`
 Notes:
 1) Depending on your system, the scraper may take ~1.5-2 days to run - there
     are over 8,000 comments and the program bakes in sleep time to allow the
-    page to load
+    page to load and to space requests so as not to overload the website
 2) Web scrapers are brittle by nature - changes to the HTML structure of the
     target webpage can break the scraper. Always check that the path to the
     unique element the scraper targets is updated in the script
