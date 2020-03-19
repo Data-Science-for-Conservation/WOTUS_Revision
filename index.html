@@ -8,31 +8,95 @@
 
   <!-- Style sheets -->
   <link rel="stylesheet" type="text/css" href="https://cdn.rawgit.com/bmabey/pyLDAvis/files/ldavis.v1.0.0.css">
-  <link rel="stylesheet" type="text/css" href="./topic_webpg/index.css">
+  <link rel="stylesheet" type="text/css" href="./webpg_assets/index.css">
 
-  <title>WOTUS Topic Analysis</title>
+  <title>WOTUS Public Comments Analysis</title>
 </head>
 <body>
-  <h1>WOTUS Public Comments Topic Analysis</h1>
+  <h1>Analysis of Public Comments Regarding the EPA's Revised Definition of "Waters of the United States" (WOTUS)</h1>
 
-    <h2>Analyzing Topics with Latent Dirichlet Allocation</h2>
+  <h2>Background and Project Overview</h2>
 
-    <p> The following topics were generated using a Latent Dirichlet Allocation (LDA) model in Scikit-Learn on the entire training set. LDA is a statistical model to find the different mix of <code>n</code> topics that comprise the comments in the collection. The user needs to supply the number of topics, which isn't always clear in an un-labeled dataset. Fortunately there's a <code>perplexity</code> metric, which allows you to compare models using a varying <code>n</code> number of topics to help determine the appropriate topic count for the dataset.</p>
+  <p>
+    In early 2017, President Trump signed an Executive Order<sup><a href="#footnote1">1</a></sup> requesting that agencies review a 2015 rule regarding the "Waters of the United States". The agencies, including the Environmental Protection Agency (EPA) and the Department of the Army, were instructed to rescind or replace the rule, in accordance with law.
+  </p>
+
+  <p>
+    The agencies have since conducted a reevaluation and revision of the definition of "Waters of the United States". Their proposed rule redefines the scope of waters federally regulated under the Clean Water Act (CWA). This rule was open for public comment for 60 days until April 15, 2019, and the revised rule took effect on December 23, 2019. With some exceptions, the comments generally fell into one of two buckets: they were either supportive of the proposed re-definition or opposed to changes to the 2015 rule.
+  </p>
+
+  <p>
+    This project applies Natural Language Processing (NLP) techniques to analyze the comments that are publicly available in docket EPA-HQ-OW-2018-0149 on the <a href="https://www.regulations.gov/docket?D=EPA-HQ-OW-2018-0149">regulations.gov web page</a>. This includes both unsupervised and supervised approaches to articulate topics, examine clusters, and perform sentiment analysis.
+  </p>
+
+  <h2>Project Challenges</h2>
+
+  <p>
+    The challenges of this project fell into two broad categories - ones relating to data collection and ones associated with the nature of the dataset.
+  </p>
+
+  <h3>Challenge 1: Data Collection</h3>
+
+  <p>
+    The project relied on a web scraper to collect the text of the comments. The regulations.gov website has an API to request data, however, only organizations (not individuals) qualify for an API key. The script had ample wait times built in so as not to overload the website with requests and took almost two full days to run.
+  </p>
+
+  <p>
+    Retrieving data programmatically through the API would have reduced the overall time to compile a dataset, and also potentially increased the number of comments collected. Approximately 3K of the available 11K comments in the docket were locked up in attachments (mostly PDF or image formats), whose content was outside the capabilities of consumer-level (non-Optical Character Recognition) PDF-conversion software. There's a possibility that the text of those comments could be accessed through an API call.
+  </p>
+
+  <p>
+    Additionally, the 8K-comment dataset represents only a fraction of all public comments submitted during the comment period. The docket lists a total of over 625K comments received, however, there are only 11K comments available under public submissions. The EPA and Army explained this discrepancy:
+  </p>
+
+  <blockquote>
+    Agencies review all submissions, however some agencies may choose to redact, or withhold, certain submissions (or portions thereof) such as those containing private or proprietary information, inappropriate language, or duplicate/near duplicate examples of a mass-mail campaign. This can result in discrepancies between this count and those displayed when conducting searches on the Public Submission document type.
+  </blockquote>
+
+  <p>
+    In light of this, the project had to assume the 8K sample of comments used in the analysis are generally representative of the public's views. Given the missing data and the comment above about removing duplicates in a mass-mail campaign, it was necessary to apply caution in drawing any conclusions about the <i>proportions</i> of comments for or against the rule change. There could be thousands of members of an organization sending the same mass-mail form in support or against the rule change, but it would only show up once in the submissions.
+  </p>
+
+  <h3>Challenge 2: Nature of the Dataset</h3>
+
+  <p>
+    The dataset is comprised of unstructured, unlabeled text, which offered its own challenges. The lack of labeled data restricted the analysis to unsupervised learning techniques at first. However, a sample of 1,200 comments were manually labeled to gauge the performance of clustering analysis and enable classification and sentiment analysis. Of course, this further limited the size of the dataset and having more labeled observations would likely improve the performance of the models.
+  </p>
+
+  <p>
+    Not surprisingly, the pre-processing choices for how to convert the text to a numeric representation (the term-document matrix) impacted the outcome of the models. While this is measurable in supervised learning techniques by reviewing model performance, it was more of a challenge with the unsupervised models. Where possible, quantitative metrics were used to compare the different pre-processing approaches - these included <code>perplexity</code> in the topic analysis or <code>inertia</code> and <code>silhouette score</code> in the clustering analysis. However, at a certain point, there was a need for more qualitative and subjective measures (particularly with topic analysis) to determine what constituted the best results.
+  </p>
+
+  <p>
+    Finally, the overlap of the language used in many comments added to the challenge of finding distinct topics or clusters. Training models to find context from "bag of words" representations turned out to be quite difficult. Below are two example excerpts from comments - both mentioning agriculture and the need for clean water - but they are on opposing sides of the issue:
+  </p>
+
+  <blockquote>
+    "I support clean water. We need clear rules on how this is to be accomplished. I personally try hard to have as little erosion as possible. Terraces, grass waterways, contour farming, no-till, headlands, etc. As hard as I and other farmers try to conserve and keep waters clean, we need clear rules with common sense to provide us direction. Hopefully this is a step in that direction and we all can work together to feed the world."
+  </blockquote>
+
+  <blockquote>
+    "I stand for clean water! Clean and healthy waterways are key to western agriculture, recreation and tourist economies that support our communities. These wholesale changes to the Clean Water Act to limit its jurisdiction provide loopholes in the law and give polluters incentives to discharge dangerous pollutants into unprotected waterways. Please protect our water - the essence of life upon which we all depend!"
+  </blockquote>
+
+  <h2>Topic Analysis Using Latent Dirichlet Allocation</h2>
+
+  <p> The following topics were generated using a Latent Dirichlet Allocation (LDA) model in Scikit-Learn on the entire training set. LDA is a statistical model to find the different mix of <code>n</code> topics that comprise the comments in the collection. The user needs to supply the number of topics, which isn't always clear in an un-labeled dataset. Fortunately there's a <code>perplexity</code> metric, which allows you to compare models using a varying <code>n</code> number of topics to help determine the appropriate topic count for the dataset.</p>
     <p><a href="https://en.wikipedia.org/wiki/Perplexity">Wikipedia</a> defines <code>perplexity</code> as:</p>
 
-    <blockquote>In information theory, <bold>perplexity</bold> is a measurement of how well a probability distribution or probability model predicts a sample. It may be used to compare probability models. A low perplexity indicates the probability distribution is good at predicting the sample.</blockquote>
+  <blockquote>In information theory, <bold>perplexity</bold> is a measurement of how well a probability distribution or probability model predicts a sample. It may be used to compare probability models. A low perplexity indicates the probability distribution is good at predicting the sample.</blockquote>
 
-    <p>Since perplexity will continue to drop as the number of topics increases, one way to determine an appropriate topic count is to look for the "elbow" in a chart of scores by topic.</p>
+  <p>Since perplexity will continue to drop as the number of topics increases, one way to determine an appropriate topic count is to look for the "elbow" in a chart of scores by topic.</p>
 
-    <p>
-      <img src="./Figures/LDA_Perplexity_for_nTopics.png">
-    </p>
+  <p>
+    <img src="./Figures/LDA_Perplexity_for_nTopics.png">
+  </p>
 
-    <p>In the above chart, the sharpest decline in perplexity happens from two to eight topics, with a flattening of the curve thereafter. The chart indicates that around eight topics is where the law of diminishing returns kicks in thus further improvements to perplexity are minimal. The model was set to eight topics, which were then qualitatively analyzed to further garner insight into the dataset.</p>
+  <p>In the above chart, the sharpest decline in perplexity happens from two to eight topics, with a flattening of the curve thereafter. The chart indicates that around eight topics is where the law of diminishing returns kicks in thus further improvements to perplexity are minimal. The model was set to eight topics, which were then qualitatively analyzed to further garner insight into the dataset.</p>
 
   <!-- Interactive LDA script -->
   <div id="ldavis_el336141128775838403788339513"></div>
-  <script type="text/javascript" src="./topic_webpg/LDA_script.js"></script>
+  <script type="text/javascript" src="./webpg_assets/LDA_script.js"></script>
 
   <h3>LDA Topic Summary</h3>
 
@@ -165,7 +229,17 @@
     </table>
   </div>
 
-  <h2>Conclusions</h2>
+  <h2>Clustering Analysis</h2>
+
+  <p>TO COME</p>
+
+  <h2>Sentiment Analysis</h2>
+
+  <p>TO COME</p>
+
+  <h2><a name="conclusions"></a>Project Conclusions</h2>
+
+  <h3> Topic Analysis</h3>
 
   <p>
     Overall, the LDA model found relevant topics spanning the dataset. These topics were also confirmed while a sample of 1,200 comments were read and labeled for the sentiment analysis task. There were a few one-off comments that made points outside the eight categories, but they seemed to be the exception over the norm.
@@ -174,4 +248,23 @@
     The NMF model also proved useful as an efficient way to identify similar comments. This functionality could be extended to batch label comments to broaden the labeled set, allowing for the use of more complex modeling options for the sentiment analysis.
   </p>
 
+  <h3>Clustering Analysis</h3>
+
+  <p>
+    The clustering analysis used a KMeans clustering algorithm with two clusters and fit on training data that was pre-processed with the top performing count vectorizer (based on silhouette scores for comparison). After inspecting a sample of comments in each cluster, then performing dimensionality reduction and TSNE to visualize the clusters against a sample of labeled data, the clusters proved to have a lot of overlap of opposing and supportive comments.
+  </p>
+
+  <p>
+    The visualizations showed there were groupings and structure in the data, but the model unfortunately wasn't able to distinguish the groups clearly in terms of <i>sentiment</i>. Instead, the clusters the model found appeared to be driven more by <i>topic</i>. This is somewhat attributable to the nature of a simple "bag of words" pre-processing technique like the count vectorizer.
+  </p>
+
+  <p>
+    As noted above, one of the challenges with this dataset was how much shared language occured between supporting and opposing comments - "I support the current rule change" vs. "I support the 2015 ruling", or "I want clean water for my grandkids" vs. "I want clean water and clear rules". The "bag of words" preprocessing technique wasn't able to preserve the context that the similar language occured in, and therefore put limitations on the clustering model's ability to be a proxy for sentiment analysis. Pre-processing with different vectorizers, limiting features, and using only bigrams didn't improve the clustering results.
+  </p>
+
+  <footer>
+    <p>
+      Notes:<br />
+      <a name="footnote1">1</a>: Executive Order 13778, signed on February 28, 2017, titled "Restoring the Rule of Law, Federalism, and Economic Growth by Reviewing the 'Waters of the United States' Rule"</p>
+  </footer>
 </body>
