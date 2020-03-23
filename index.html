@@ -79,6 +79,38 @@
     "I stand for clean water! Clean and healthy waterways are key to western agriculture, recreation and tourist economies that support our communities. These wholesale changes to the Clean Water Act to limit its jurisdiction provide loopholes in the law and give polluters incentives to discharge dangerous pollutants into unprotected waterways. Please protect our water - the essence of life upon which we all depend!"
   </blockquote>
 
+  <h2>Exploratory Data Analysis</h2>
+
+  <p>
+    Word clouds can be useful to get an overview of the most common words (or bigrams, as in the analysis below) in a dataset of text. The first image was created using the entire training set, and provides a nice sanity check that the comments are generally about clean water. For example, if "immigration" showed up in the plot, there may be cause for concern on the integrity of the collected comments. But as expected, the most common bigram was "clean water". A closer inspection of the smaller-sized bigrams also uncovers the more opinionated phrases, such as "polluting industries", "dirty water", "clear rule", or "common sense".
+  </p>
+
+  <img alt="Image showing the most common 2-word combinations from the full training set" src="./webpg_assets/wordcloud_all.png">
+
+  <p>
+    Word clouds were also generated for subsets of labeled data to compare the vocabulary differences between supportive comments and opposing comments. No surprises here either - the supporting comments include "farm", "support proposed", and "clear rule" while the opposing ones mention "protection", "keep clean", and "drinking water".
+  </p>
+
+  <table>
+    <thead>
+      <tr>
+        <th>Supportive Comments</th>
+        <th>Opposing Comments</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><img src="./webpg_assets/wordcloud_sup.png"></td>
+        <td><img src="./webpg_assets/wordcloud_opp.png"></td>
+      </tr>
+      <tr>
+        <td></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+
+
   <h2>Topic Analysis Using Latent Dirichlet Allocation</h2>
 
   <p> The following topics were generated using a Latent Dirichlet Allocation (LDA) model in Scikit-Learn on the entire training set. LDA is a statistical model to find the different mix of <code>n</code> topics that comprise the comments in the collection. The user needs to supply the number of topics, which isn't always clear in an un-labeled dataset. Fortunately there's a <code>perplexity</code> metric, which allows you to compare models using a varying <code>n</code> number of topics to help determine the appropriate topic count for the dataset.</p>
