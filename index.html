@@ -16,18 +16,26 @@
   <h1>Analysis of Public Comments Regarding the EPA's Revised Definition of "Waters of the United States" (WOTUS)</h1>
 
   <h2>Background and Project Overview</h2>
+  <hr>
 
   <p>
     In early 2017, President Trump signed an Executive Order<sup><a href="#footnote1">1</a></sup> requesting that agencies review a 2015 rule regarding the "Waters of the United States". The agencies, including the Environmental Protection Agency (EPA) and the Department of the Army, were instructed to rescind or replace the rule, in accordance with law.
   </p>
 
   <p>
-    The agencies have since conducted a reevaluation and revision of the definition of "Waters of the United States". Their proposed rule redefines the scope of waters federally regulated under the Clean Water Act (CWA). This rule was open for public comment for 60 days until April 15, 2019, and the revised rule took effect on December 23, 2019. With some exceptions, the comments generally fell into one of two buckets: they were either supportive of the proposed re-definition or opposed to changes to the 2015 rule.
+    The agencies have since conducted a reevaluation and revision of the definition of "Waters of the United States". Their proposed rule redefines the scope of waters federally regulated under the Clean Water Act (CWA). This rule was open for public comment for 60 days until April 15, 2019, and the revised rule took effect on December 23, 2019. The comments are available under "Public Submissions" for docket EPA-HQ-OW-2018-0149 on the <a href="https://www.regulations.gov/docket?D=EPA-HQ-OW-2018-0149">regulations.gov web page</a>.
   </p>
 
   <p>
-    This project applies Natural Language Processing (NLP) techniques to analyze the comments that are publicly available in docket EPA-HQ-OW-2018-0149 on the <a href="https://www.regulations.gov/docket?D=EPA-HQ-OW-2018-0149">regulations.gov web page</a>. This includes both unsupervised and supervised approaches to articulate topics, examine clusters, and perform sentiment analysis.
+    With some exceptions, the comments generally fell into one of two buckets: they were either supportive of the proposed re-definition or opposed to changes to the 2015 rule. This project applies Natural Language Processing (NLP) techniques to analyze the publicly available comments, including:
   </p>
+
+  <ul>
+    <li><span class="bold">Topic Analysis</span> to understand the reasons commenters gave for their support or opposition to the rule change</li>
+    <li><span class="bold">Similarity Analysis</span> to find similar (potentially labeled) comments to a new or unseen one</li>
+    <li><span class="bold">Clustering Analysis</span> to find structure in the un-labeled dataset, and potentially to act as a proxy for sentiment analysis</li>
+    <li><span class="bold">Sentiment Analysis</span> (performed after labeling a subset of comments) to train a classifier to identify comments as either supportive or opposing the rule change</li>
+  </ul>
 
   <h2>Project Challenges</h2>
 
@@ -35,18 +43,10 @@
     The challenges of this project fell into two broad categories - ones relating to data collection and ones associated with the nature of the dataset.
   </p>
 
-  <h3>Challenge 1: Data Collection</h3>
+  <h3>Challenge 1: Data Availability and Collection</h3>
 
   <p>
-    The project relied on a web scraper to collect the text of the comments. The regulations.gov website has an API to request data, however, only organizations (not individuals) qualify for an API key. The script had ample wait times built in so as not to overload the website with requests and took almost two full days to run.
-  </p>
-
-  <p>
-    Retrieving data programmatically through the API would have reduced the overall time to compile a dataset, and also potentially increased the number of comments collected. Approximately 3K of the available 11K comments in the docket were locked up in attachments (mostly PDF or image formats), whose content was outside the capabilities of the author's consumer-level (non-Optical Character Recognition) PDF-conversion software. There's a possibility that the text of those comments could be accessed through an API call.
-  </p>
-
-  <p>
-    Additionally, the 8K-comment dataset represents only a fraction of all public comments submitted during the comment period. The docket lists a total of over 625K comments received, however, there are only 11K comments available under public submissions. The EPA and Army explained this discrepancy:
+    Only a fraction of the total comments submitted during the comment period are actually publically available in the docket. The docket lists a total of over 625K comments received, however, there are only 11K comments available under "Public Submissions". The EPA and Army explained this discrepancy:
   </p>
 
   <blockquote>
@@ -54,17 +54,17 @@
   </blockquote>
 
   <p>
-    In light of this, the project had to assume the 8K sample of comments used in the analysis are generally representative of the public's views. Given the missing data and the comment above about removing duplicates in a mass-mail campaign, it was necessary to apply caution in drawing any conclusions about the <i>proportions</i> of comments for or against the rule change. There could be thousands of members of an organization sending the same mass-mail form in support or against the rule change, but it would only show up once in the submissions.
+    Second, the project relied on a web scraper<sup><a href="#footnote2">2</a></sup> to actually collect the text of the comments in the docket. The regulations.gov website has an API to request data, however, only organizations (not individuals) qualify for an API key. The text of approximately 3K of the available 11K comments were locked in attachments (PDF or image formats) and unavailable to the scraper.
+  </p>
+
+  <p>
+    In light of this, the project had to assume the 8K sample of comments used in the analysis are generally representative of the public's views. Given the missing data and the comment above about removing duplicates in mass-mail campaigns, it was necessary to apply caution in drawing any conclusions about the <em>proportions</em> of comments for or against the rule change. There could be thousands of members of an organization sending the same mass-mail form to support or oppose the rule change, but it would only show up once in the submissions.
   </p>
 
   <h3>Challenge 2: Nature of the Dataset</h3>
 
   <p>
-    The dataset is comprised of unstructured, unlabeled text, which offered its own challenges. The lack of labeled data restricted the analysis to unsupervised learning techniques at first. However, a sample of 1,200 comments were manually labeled to gauge the performance of clustering analysis and enable classification and sentiment analysis. Of course, this further limited the size of the dataset and having more labeled observations would likely improve the performance of the models.
-  </p>
-
-  <p>
-    Not surprisingly, the pre-processing choices for how to convert the text to a numeric representation (the term-document matrix) impacted the outcome of the models. While this is measurable in supervised learning techniques by reviewing model performance, it was more of a challenge with the unsupervised models. Where possible, quantitative metrics were used to compare the different pre-processing approaches - these included <code>perplexity</code> in the topic analysis or <code>inertia</code> and <code>silhouette score</code> in the clustering analysis. However, at a certain point, there was a need for more qualitative and subjective measures (particularly with topic analysis) to determine what constituted the best results.
+    The dataset is comprised of unstructured, unlabeled text, which offered its own challenges. The lack of labeled data restricted the analysis to unsupervised learning techniques at first. However, a sample of 1,200 comments were manually labeled to gauge the performance of clustering analysis (as a proxy for sentiment analysis) and enable classification and sentiment analysis. Of course, this further limited the size of the dataset and having more labeled observations would likely improve the performance of the models.
   </p>
 
   <p>
@@ -82,7 +82,7 @@
   <h2>Exploratory Data Analysis</h2>
 
   <p>
-    Word clouds can be useful to get an overview of the most common words (or bigrams, as in the analysis below) in a dataset of text. The first image was created using the entire training set, and provides a nice sanity check that the comments are generally about clean water. For example, if "immigration" showed up in the plot, there may be cause for concern on the integrity of the collected comments. But as expected, the most common bigram was "clean water". A closer inspection of the smaller-sized bigrams also uncovers the more opinionated phrases, such as "polluting industries", "dirty water", "clear rule", or "common sense".
+    Word clouds can be useful to get an overview of the most common words (or bigrams, as in the analysis below) in a dataset of text. The first image was created using the entire training set, and provides a nice sanity check that the comments are generally about clean water. For example, if "immigration" showed up in the plot, it would raise concerns about the integrity of the collected comments. But as expected, the most common bigram was "clean water". A closer inspection of the smaller-sized bigrams also uncovers the more opinionated phrases, such as "polluting industries", "dirty water", "clear rule", or "common sense".
   </p>
 
   <img alt="Image showing the most common 2-word combinations from the full training set" src="./webpg_assets/wordcloud_all.png">
@@ -91,21 +91,6 @@
     Word clouds were also generated for subsets of labeled data to compare the vocabulary differences between supportive comments and opposing comments. No surprises here either - the supporting comments include "farm", "support proposed", and "clear rule" while the opposing ones mention "protection", "keep clean", and "drinking water".
   </p>
 
-  <table>
-    <thead>
-      <tr>
-        <th>Supportive Comments</th>
-        <th>Opposing Comments</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><img src="./webpg_assets/wordcloud_sup.png"></td>
-        <td><img src="./webpg_assets/wordcloud_opp.png"></td>
-      </tr>
-    </tbody>
-  </table>
-
   <p>
     A look at the top-50 words in each set of comments also sheds light on the different vocabulary between the groups. The table below shows the shared words as well as the unique ones found in one set but not the other.
   </p>
@@ -113,13 +98,33 @@
   <table>
     <thead>
       <tr>
-        <th>Supportive Words Only</th>
-        <th>Shared</th>
-        <th>Opposing Words Only</th>
+        <th scope="col" colspan="2">Supportive Comments</th>
+        <th scope="col"><!-- Intentionally blank --></th>
+        <th scope="col" colspan="2">Opposing Comments</th>
       </tr>
     </thead>
     <tbody>
       <tr>
+        <td><img src="./webpg_assets/wordcloud_sup.png"></td>
+        <td><!-- Intentionally blank --></td>
+        <td><!-- Intentionally blank --></td>
+        <td><img src="./webpg_assets/wordcloud_opp.png"></td>
+        <td><!-- Intentionally blank --></td>
+      </tr>
+    </tbody>
+  </table>
+
+  <table>
+    <thead>
+      <tr class="trow-as-header">
+        <th colspan="2">Supportive Words Only</td>
+        <th>Shared Words</td>
+        <th colspan="2">Opposing Words Only</td>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <!-- First half supportive words list -->
         <td>
           <ul>
             <li>2015</li>
@@ -139,6 +144,11 @@
             <li>know</li>
             <li>land</li>
             <li>landowner</li>
+          </ul>
+        </td>
+        <!-- Second half supportive words list -->
+        <td>
+          <ul>
             <li>new</li>
             <li>practice</li>
             <li>property</li>
@@ -158,6 +168,7 @@
             <li>write</li>
           </ul>
         </td>
+        <!-- Shared words list -->
         <td>
           <ul>
             <li>act</li>
@@ -178,6 +189,7 @@
             <li>waterway</li>
           </ul>
         </td>
+        <!-- First half opposing words list -->
         <td>
           <ul>
             <li>allow</li>
@@ -197,6 +209,11 @@
             <li>industry</li>
             <li>lake</li>
             <li>large</li>
+          </ul>
+        </td>
+        <!-- Second half opposing words list -->
+        <td>
+          <ul>
             <li>live</li>
             <li>million</li>
             <li>oppose</li>
@@ -219,7 +236,6 @@
       </tr>
     </tbody>
   </table>
-
 
   <h2>Topic Analysis Using Latent Dirichlet Allocation</h2>
 
@@ -404,9 +420,16 @@
     As noted above, one of the challenges with this dataset was how much shared language occured between supporting and opposing comments - "I support the current rule change" vs. "I support the 2015 ruling", or "I want clean water for my grandkids" vs. "I want clean water and clear rules". The "bag of words" preprocessing technique wasn't able to preserve the context that the similar language occured in, and therefore put limitations on the clustering model's ability to be a proxy for sentiment analysis. Pre-processing with different vectorizers, limiting features, and using only bigrams didn't improve the clustering results.
   </p>
 
+  <p>
+    <!-- Moved from Challenges section -->
+    Not surprisingly, the pre-processing choices for how to convert the text to a numeric representation (the term-document matrix) impacted the outcome of the models. While this is measurable in supervised learning techniques by reviewing model performance, it was more of a challenge with the unsupervised models. Where possible, quantitative metrics were used to compare the different pre-processing approaches - these included <code>perplexity</code> in the topic analysis or <code>inertia</code> and <code>silhouette score</code> in the clustering analysis. However, at a certain point, there was a need for more qualitative and subjective measures (particularly with topic analysis) to determine what constituted the best results.
+  </p>
+
   <footer>
     <p>
       Notes:<br />
-      <a name="footnote1">1</a>: Executive Order 13778, signed on February 28, 2017, titled "Restoring the Rule of Law, Federalism, and Economic Growth by Reviewing the 'Waters of the United States' Rule"</p>
+      <a name="footnote1">1</a>: Executive Order 13778, signed on February 28, 2017, titled "Restoring the Rule of Law, Federalism, and Economic Growth by Reviewing the 'Waters of the United States' Rule"<br>
+      <a name="footnote2">2</a> The web scraper script built in ample wait times so as not to overload the website with requests
+    </p>
   </footer>
 </body>
