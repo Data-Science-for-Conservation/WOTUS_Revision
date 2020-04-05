@@ -57,26 +57,35 @@
   </p>
 
   <p>
-    In light of this, the project had to assume the 8K sample of comments used in the analysis are generally representative of the public's views. Given the missing data and the comment above about removing duplicates in mass-mail campaigns, it was necessary to apply caution in drawing any conclusions about the <em>proportions</em> of comments for or against the rule change. There could be thousands of members of an organization sending the same mass-mail form to support or oppose the rule change, but it would only show up once in the submissions.
+    In light of this, the project had to assume the 8K sample of comments used in the analysis are generally representative of the public's views. That said, care was taken to not draw conclusions about the <em>proportions</em> of comments for or against the rule change. There could be thousands of members of an organization sending the same mass-mail form to support or oppose the rule change, but it would only show up once in the submissions.
   </p>
 
   <h3>Challenge 2: Nature of the Dataset</h3>
 
   <p>
-    The dataset is comprised of unstructured, unlabeled text, which offered its own challenges. The lack of labeled data restricted the analysis to unsupervised learning techniques at first. However, a sample of 1,200 comments were manually labeled to gauge the performance of clustering analysis (as a proxy for sentiment analysis) and enable classification and sentiment analysis. Of course, this further limited the size of the dataset and having more labeled observations would likely improve the performance of the models.
+    The dataset is comprised of unstructured, unlabeled text. The lack of labeled data restricted the analysis to unsupervised learning techniques at first. However, a sample of 1,200 comments were manually labeled to gauge the performance of clustering analysis (as a proxy for sentiment analysis) and to enable classification and sentiment analysis. Of course, this further limited the size of the dataset and having more labeled observations would likely improve the performance of the models.
   </p>
 
   <p>
     Finally, the overlap of the language used in many comments added to the challenge of finding distinct topics or clusters. Training models to find context from "bag of words" representations turned out to be quite difficult. Below are two example excerpts from comments - both mentioning agriculture and the need for clean water - but they are on opposing sides of the issue:
   </p>
 
-  <blockquote>
-    "I support clean water. We need clear rules on how this is to be accomplished. I personally try hard to have as little erosion as possible. Terraces, grass waterways, contour farming, no-till, headlands, etc. As hard as I and other farmers try to conserve and keep waters clean, we need clear rules with common sense to provide us direction. Hopefully this is a step in that direction and we all can work together to feed the world."
-  </blockquote>
-
-  <blockquote>
-    "I stand for clean water! Clean and healthy waterways are key to western agriculture, recreation and tourist economies that support our communities. These wholesale changes to the Clean Water Act to limit its jurisdiction provide loopholes in the law and give polluters incentives to discharge dangerous pollutants into unprotected waterways. Please protect our water - the essence of life upon which we all depend!"
-  </blockquote>
+  <table>
+    <thead>
+      <th scope="col">Example Supportive Comment</th>
+      <th scope="col">Example Opposing Comment</th>
+    </thead>
+    <tbody>
+      <tr>
+        <td>
+          "I support clean water. We need clear rules on how this is to be accomplished. I personally try hard to have as little erosion as possible. Terraces, grass waterways, contour farming, no-till, headlands, etc. As hard as I and other farmers try to conserve and keep waters clean, we need clear rules with common sense to provide us direction. Hopefully this is a step in that direction and we all can work together to feed the world."
+        </td>
+        <td>
+          "I stand for clean water! Clean and healthy waterways are key to western agriculture, recreation and tourist economies that support our communities. These wholesale changes to the Clean Water Act to limit its jurisdiction provide loopholes in the law and give polluters incentives to discharge dangerous pollutants into unprotected waterways. Please protect our water - the essence of life upon which we all depend!"
+        </td>
+      </tr>
+    </tbody>
+  </table>
 
   <h2>Exploratory Data Analysis</h2>
 
