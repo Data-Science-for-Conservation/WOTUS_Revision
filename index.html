@@ -13,9 +13,20 @@
   <title>WOTUS Public Comments Analysis</title>
 </head>
 <body>
-  <h1>Analysis of Public Comments Regarding the EPA's Revised Definition of "Waters of the United States" (WOTUS)</h1>
+  <h1>Analysis of Public Comments Regarding the Revised Definition of "Waters of the United States"</h1>
 
-  <h2>Background and Project Overview</h2>
+  <p>
+    This project applies Natural Language Processing (NLP) techniques to analyze the publicly submitted comments in response to the revised definition of "Waters of the United States" (WOTUS), including:
+  </p>
+
+  <ul>
+    <li><span class="bold">Topic Analysis</span> to understand the reasons commenters gave for their support or opposition to the rule change</li>
+    <li><span class="bold">Similarity Analysis</span> to find similar (potentially labeled) comments to a new or unseen one</li>
+    <li><span class="bold">Clustering Analysis</span> to find structure in the un-labeled dataset, and potentially to act as a proxy for sentiment analysis</li>
+    <li><span class="bold">Sentiment Analysis</span> (performed after labeling a subset of comments) to train a classifier to identify comments as either supportive or opposing the rule change</li>
+  </ul>
+
+  <h2>Project Background</h2>
 
   <p>
     In early 2017, President Trump signed an Executive Order<sup><a href="#footnote1">1</a></sup> requesting that agencies review a 2015 rule regarding the "Waters of the United States". The agencies, including the Environmental Protection Agency (EPA) and the Department of the Army, were instructed to rescind or replace the rule, in accordance with law.
@@ -26,15 +37,8 @@
   </p>
 
   <p>
-    With some exceptions, the comments generally fell into one of two buckets: they were either supportive of the proposed re-definition or opposed to changes to the 2015 rule. This project applies Natural Language Processing (NLP) techniques to analyze the publicly available comments, including:
+    With some exceptions, the comments generally fell into one of two buckets: they were either supportive of the proposed re-definition or opposed to changes to the 2015 rule.
   </p>
-
-  <ul>
-    <li><span class="bold">Topic Analysis</span> to understand the reasons commenters gave for their support or opposition to the rule change</li>
-    <li><span class="bold">Similarity Analysis</span> to find similar (potentially labeled) comments to a new or unseen one</li>
-    <li><span class="bold">Clustering Analysis</span> to find structure in the un-labeled dataset, and potentially to act as a proxy for sentiment analysis</li>
-    <li><span class="bold">Sentiment Analysis</span> (performed after labeling a subset of comments) to train a classifier to identify comments as either supportive or opposing the rule change</li>
-  </ul>
 
   <h2>Project Challenges</h2>
 
