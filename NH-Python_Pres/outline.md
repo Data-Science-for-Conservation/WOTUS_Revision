@@ -13,8 +13,8 @@
      - It is also a great example of applied mathematics - the models use some combination of linear algebra, calculus, probabilistic logic from statistics, and even simple trigonometry
  - Differences compared to traditional model-buidling
      - Traditional model-building takes inputs, applies a set of rules or formulas to the inputs, and generates output
-     - M&A finance example - plug company
-     - Machine Learning flips this paradigm on its head: still have input, but instead of writing formulas or rules to calculate output, the model has a task to perform and it uses the examples you've fed it in your data to learn the relationships/patterns/trends
+     - M&A finance example - plug standalone company financials in, layer on transaction adjustments, model outputs pro forma financials
+     - Machine Learning flips this paradigm on its head: still have input, but instead of writing formulas or rules to calculate output, the model has a task to perform and it uses the examples you've fed it in your data to learn the relationships/patterns/trends. In other words, it learns the model
      - Being a bit vague here, because what the model outputs (solves for) depends on what the task is that it's trying to perform
  - How to use ML in Python
      - "Data Science Stack": SciPy, NumPy, Pandas
