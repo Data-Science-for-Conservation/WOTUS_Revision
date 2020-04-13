@@ -251,18 +251,18 @@
 
   <h2>Topic Analysis Using Latent Dirichlet Allocation</h2>
 
-  <p> The following topics were generated using a Latent Dirichlet Allocation (LDA) model in Scikit-Learn on the entire training set. LDA is a statistical model to find the different mix of <code>n</code> topics that comprise the comments in the collection. The user needs to supply the number of topics, which isn't always clear in an un-labeled dataset. Fortunately there's a <code>perplexity</code> metric, which allows you to compare models using a varying <code>n</code> number of topics to help determine the appropriate topic count for the dataset.</p>
+  <p> The following topics were generated using a Latent Dirichlet Allocation (LDA) model in Scikit-Learn on the entire training set. LDA is a statistical model to find the different mix of <code>n</code> topics that comprise the collection of comments. The user needs to supply the number of topics, which isn't always clear in an un-labeled dataset. Fortunately there's a <code>perplexity</code> metric, which allows you to compare models using a varying <code>n</code> number of topics to help determine the appropriate topic count for the dataset.</p>
     <p><a href="https://en.wikipedia.org/wiki/Perplexity">Wikipedia</a> defines <code>perplexity</code> as:</p>
 
   <blockquote>In information theory, <bold>perplexity</bold> is a measurement of how well a probability distribution or probability model predicts a sample. It may be used to compare probability models. A low perplexity indicates the probability distribution is good at predicting the sample.</blockquote>
 
-  <p>Since perplexity will continue to drop as the number of topics increases, one way to determine an appropriate topic count is to look for the "elbow" in a chart of scores by topic.</p>
+  <p>Low perplexity scores are better, but there's a practical trade-off with the number of topics. They need to be interpretable to a human and different enough to have value in a practical application. This analysis employed the "elbow" method as guidance to find the appropriate number of topics to balance of score and, after introspection, utility in the topics.</p>
 
   <p>
-    <img src="./Figures/LDA_Perplexity_for_nTopics.png">
+    <img alt="Line chart showing declining perplexity scores by number of topics" src="./webpg_assets/LDA_Perplexity_for_nTopics.png">
   </p>
 
-  <p>In the above chart, the sharpest decline in perplexity happens from two to eight topics, with a flattening of the curve thereafter. The chart indicates that around eight topics is where the law of diminishing returns kicks in thus further improvements to perplexity are minimal. The model was set to eight topics, which were then qualitatively analyzed to further garner insight into the dataset.</p>
+  <p>In the above chart, the sharpest decline in perplexity happens from two to eight topics, with a flattening of the curve thereafter. This indicates that around eight topics is where the law of diminishing returns kicks in thus further improvements to perplexity are minimal. The results of a model set to eight topics were then analyzed to find themes within the top words by topic.</p>
 
   <!-- Interactive LDA script -->
   <div id="ldavis_el336141128775838403788339513"></div>
