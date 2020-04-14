@@ -21,4 +21,8 @@
 
 ## Why Text is Important, What is NLP, How to Handle Text in ML
 
-- Text
+- Text is ubiquitous and is the main way humans communicate to each other online
+    - Blog posts, social media posts, product reviews, forum discussions, comment threads
+- Text is easy for humans to digest, but not optimal for machines (they prefer numbers)
+
+
