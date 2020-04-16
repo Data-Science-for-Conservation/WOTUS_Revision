@@ -16,7 +16,7 @@
   <h1>Analysis of Public Comments Regarding the Revised Definition of "Waters of the United States"</h1>
 
   <p>
-    This project applies Natural Language Processing (NLP) techniques to analyze the publicly submitted comments in response to the revised definition of "Waters of the United States" (WOTUS), including:
+    This project applies Natural Language Processing (NLP) techniques to analyze the publicly submitted comments in response to the proposed revised definition of "Waters of the United States" (WOTUS), including:
   </p>
 
   <ul>
@@ -26,7 +26,24 @@
     <li><span class="bold">Sentiment Analysis</span> (performed after labeling a subset of comments) to train a classifier to identify comments as either supportive or opposing the rule change</li>
   </ul>
 
-  <h2>Project Background</h2>
+  <p><span class="bold">Page Contents</span><p>
+
+  <ul>
+    <li><a href="#background">Project Background</a></li>
+    <li><a href="#challenges">Project Challenges</a></li>
+    <li><a href="#eda">Exploratory Data Analysis</a></li>
+    <li><a href="#topic">Topic Analysis with Latent Dirichlet Allocation</a></li>
+    <li><a href="#similarity">Finding Similar Comments via Non-Negative Matrix Factorization</a></li>
+    <li><a href="clustering">Clustering Analysis</a></li>
+    <li><a href="sentiment">Sentiment Analysis</a></li>
+    <li><a href="conclusions">Project Conclusions</a></li>
+  </ul>
+
+  <p></p>
+
+
+  <!-- PROJECT BACKGROUND SECTION -->
+  <h2><a name="background"></a>Project Background</h2>
 
   <p>
     In early 2017, President Trump signed an Executive Order<sup><a href="#footnote1">1</a></sup> requesting that agencies review a 2015 rule regarding the "Waters of the United States". The agencies, including the Environmental Protection Agency (EPA) and the Department of the Army, were instructed to rescind or replace the rule, in accordance with law.
@@ -40,7 +57,9 @@
     With some exceptions, the comments generally fell into one of two buckets: they were either supportive of the proposed re-definition or opposed to changes to the 2015 rule.
   </p>
 
-  <h2>Project Challenges</h2>
+
+  <!-- PROJECT CHALLENGES SECTION -->
+  <h2><a name="challenges"></a>Project Challenges</h2>
 
   <p>
     The challenges of this project fell into two broad categories - ones relating to data collection and ones associated with the nature of the dataset.
@@ -91,7 +110,9 @@
     </tbody>
   </table>
 
-  <h2>Exploratory Data Analysis</h2>
+
+  <!-- EXPLORATORY DATA ANALYSIS SECTION -->
+  <h2><a name="eda"></a>Exploratory Data Analysis</h2>
 
   <p>
     Word clouds can be useful to get an overview of the most common words (or bigrams, as in the analysis below) in a dataset of text. The first image was created using the entire training set, and provides a nice sanity check that the comments are generally about clean water. For example, if "immigration" showed up in the plot, it would raise concerns about the integrity of the collected comments. But as expected, the most common bigram was "clean water". A closer inspection of the smaller-sized bigrams also uncovers the more opinionated phrases, such as "polluting industries", "dirty water", "clear rule", or "common sense".
@@ -249,7 +270,9 @@
     </tbody>
   </table>
 
-  <h2>Topic Analysis Using Latent Dirichlet Allocation</h2>
+
+  <!-- TOPIC ANALYSIS SECTION -->
+  <h2><a name="topic"></a> Topic Analysis Using Latent Dirichlet Allocation</h2>
 
   <p> The following topics were generated using a Latent Dirichlet Allocation (LDA) model in Scikit-Learn on the entire training set. LDA is a statistical model to find the different mix of <code>n</code> topics that comprise the collection of comments. The user needs to supply the number of topics, which isn't always clear in an un-labeled dataset. Fortunately there's a <code>perplexity</code> metric, which allows you to compare models using a varying <code>n</code> number of topics to help determine the appropriate topic count for the dataset.</p>
     <p><a href="https://en.wikipedia.org/wiki/Perplexity">Wikipedia</a> defines <code>perplexity</code> as:</p>
@@ -263,6 +286,7 @@
   </p>
 
   <p>In the above chart, the sharpest decline in perplexity happens from two to eight topics, with a flattening of the curve thereafter. This indicates that around eight topics is where the law of diminishing returns kicks in thus further improvements to perplexity are minimal. The results of a model set to eight topics were then analyzed to find themes within the top words by topic.</p>
+
 
   <!-- Interactive LDA script -->
   <div id="ldavis_el336141128775838403788339513"></div>
@@ -306,7 +330,9 @@
     </ol>
   </div>
 
-  <h2>Finding Similar Comments via Non-Negative Matrix Factorization</h2>
+
+  <!-- SIMILARITY ANALYSIS SECTION -->
+  <h2><a name="similarity"></a>Finding Similar Comments via Non-Negative Matrix Factorization</h2>
 
   <p>
     An eight-topic non-negative matrix factorization (NMF) model was fit to the training data. The topics closely matched the ones the LDA model found, but the goal for this model was to calculate cosine similarity on normalized comment vectors in order to find similar comments. This could then be applied to perform either batch-labeling (find the similar comments to a known, labeled one), or to find similar comments to an unseen, new one.
@@ -399,21 +425,28 @@
     </table>
   </div>
 
-  <h2>Clustering Analysis</h2>
+
+  <!-- CLUSTERING ANALYSIS SECTION -->
+  <h2><a name="clustering"></a>Clustering Analysis</h2>
 
   <p>TO COME</p>
 
-  <h2>Sentiment Analysis</h2>
+
+  <!-- SENTIMENT ANALYSIS SECTION -->
+  <h2><a name="sentiment"></a>Sentiment Analysis</h2>
 
   <p>TO COME</p>
 
+
+  <!-- CONCLUSIONS -->
   <h2><a name="conclusions"></a>Project Conclusions</h2>
 
   <h3> Topic Analysis</h3>
 
   <p>
-    Overall, the LDA model found relevant topics spanning the dataset. These topics were also confirmed while a sample of 1,200 comments were read and labeled for the sentiment analysis task. There were a few one-off comments that made points outside the eight categories, but they seemed to be the exception over the norm.
+    Overall, the LDA model found relevant topics spanning the dataset. These topics were also confirmed while reading through a sample of 1,200 comments to label them for the sentiment analysis task. There were a few one-off comments that made points outside the eight categories, but they seemed to be the exception over the norm.
   </p>
+
   <p>
     The NMF model also proved useful as an efficient way to identify similar comments. This functionality could be extended to batch label comments to broaden the labeled set, allowing for the use of more complex modeling options for the sentiment analysis.
   </p>
