@@ -1,10 +1,11 @@
-# Analysis of Public Comments Regarding the EPA's Revised Definition of "Waters of the United States" (WOTUS)
+# Analysis of Public Comments Regarding the EPA's Revised Definition of "Waters of the United States"
 
 **Quick Links to Project Resources:**
 
-- [PROJECT OVERVIEW SITE](https://data-science-for-conservation.github.io/WOTUS_Revision/) for the project's background, challenges, analysis, and conclusions
-- [JUPYTER NOTEBOOK](./WOTUS_analysis.ipynb) for the source code and underlying analysis
-- [DEPLOYED MODELS](#) (coming soon!) for the deployed final production models
+- **[Project Overview](https://data-science-for-conservation.github.io/WOTUS_Revision/):** project background, challenges, analysis, and conclusions
+- **[Jupyter Notebook](./WOTUS_analysis.ipynb):** source code and underlying analysis
+- **[Deployed Models](#):** (coming soon!) deployed final production models
+- **[NH-Python Meetup Presentation](./NH-Python_Pres/):** slides presented to the NH-Python group in April 2020
 
 ## Project Overview
 
@@ -14,7 +15,7 @@ In early 2017, President Trump signed an Executive Order<sup>[1](#footnote1)</su
 
 The agencies have since conducted a reevaluation and revision of the definition of WOTUS. Their proposed rule redefined the scope of waters federally regulated under the Clean Water Act (CWA), and therefore adjusted which waterways now fall under federal authority. The proposed revisions were open for public comment for 60 days until April 15, 2019, and the revised rule took effect on December 23, 2019. With some exceptions, the comments generally fell into one of two buckets: they were either supportive of the proposed re-definition or opposed to changes to the 2015 rule.
 
-This project analyzes the content of the comments that are publicly available in docket EPA-HQ-OW-2018-0149 on the [regulations.gov web page](https://www.regulations.gov/docket?D=EPA-HQ-OW-2018-0149).  This includes both unsupervised and supervised approaches to articulate topics, examine clusters, and perform sentiment analysis.
+This project analyzes the content of the comments that are publicly available in docket EPA-HQ-OW-2018-0149 on the [regulations.gov web page](https://www.regulations.gov/docket?D=EPA-HQ-OW-2018-0149).  This includes both unsupervised and supervised approaches with the goals to determine topics, examine clusters, and perform sentiment analysis.
 
 ## Data Collection and Analysis
 
