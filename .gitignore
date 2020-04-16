@@ -2,7 +2,7 @@
 /Data/Comments/*.txt
 /Data/*comments*
 
-# Pickled DataFrame
+# Pickled DataFrame, models
 *.pkl
 
 # Byte-compiled / optimized / DLL files
