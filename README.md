@@ -1,10 +1,16 @@
 # Analysis of Public Comments Regarding the EPA's Revised Definition of "Waters of the United States" (WOTUS)
 
+**Quick Links to Project Resources:**
+
+- [PROJECT OVERVIEW SITE](https://data-science-for-conservation.github.io/WOTUS_Revision/) for the project's background, challenges, analysis, and conclusions
+- [JUPYTER NOTEBOOK](./WOTUS_analysis.ipynb) for the source code and underlying analysis
+- [DEPLOYED MODELS](#) (coming soon!) for the deployed final production models
+
 ## Project Overview
 
-A full overview with the project's background, challenges, analysis, and conclusions can be found on the [repository website](https://data-science-for-conservation.github.io/WOTUS_Revision/) and the  underlying analysis and code relating to this project can be found in the [WOTUS_analysis Jupyter notebook](./WOTUS_analysis.ipynb).
+This project applies Natural Language Processing (NLP) techniques to analyze the publicly submitted comments in response to the revised definition of "Waters of the United States" (WOTUS).
 
-In early 2017, President Trump signed an Executive Order<sup>[1](#footnote1)</sup> requesting that agencies review a 2015 rule put in place by the Obama administration regarding the "Waters of the United States". The agencies, including the Environmental Protection Agency (EPA) and the Department of the Army, were instructed to rescind or replace the rule, in accordance with law.
+In early 2017, President Trump signed an Executive Order<sup>[1](#footnote1)</sup> requesting that agencies review a 2015 rule put in place by the Obama administration regarding WOTUS. The agencies, including the Environmental Protection Agency (EPA) and the Department of the Army, were instructed to rescind or replace the rule, in accordance with law.
 
 The agencies have since conducted a reevaluation and revision of the definition of WOTUS. Their proposed rule redefined the scope of waters federally regulated under the Clean Water Act (CWA), and therefore adjusted which waterways now fall under federal authority. The proposed revisions were open for public comment for 60 days until April 15, 2019, and the revised rule took effect on December 23, 2019. With some exceptions, the comments generally fell into one of two buckets: they were either supportive of the proposed re-definition or opposed to changes to the 2015 rule.
 
