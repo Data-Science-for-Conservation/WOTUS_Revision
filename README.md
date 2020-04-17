@@ -23,23 +23,27 @@ The comments were collected by running a web scraping program (`./scraper.py`) t
 
 ## Setting Up the Local Environment
 
-This project uses the [Anaconda distribution](https://www.anaconda.com/distribution/) to manage Python packages. An environment with all necessary packages to run both the `scraper.py` and the NLP analysis is saved in `./environment.yml`. If you're using Anaconda as well, you can run the following commands to re-create the environment locally, then activate it.
+This project uses the [Anaconda distribution](https://www.anaconda.com/distribution/) to manage Python packages. There are two separate environments with all necessary respective packages to run the web scraper (`./environment_webby.yml`) and the NLP analysis (`./environment_nlp.yml`). If you're using Anaconda as well, you can run the following commands to re-create either environment locally, then activate it.
 
 ```bash
-conda env create --file environment.yml
-conda activate wotus
+conda env create --file environment_nlp.yml
+conda activate
 ```
 
-(If you don't like the name `wotus`, you can edit the first line of your local version of the `environment.yml` file and change it to whatever name you'd prefer before creating it.)
+(If you don't like the name of either environment, you can edit the first line of your local versions of the `.yml` files and change it to whatever name you'd prefer before creating it.)
 
-For reasons documented [here](https://jakevdp.github.io/blog/2017/12/05/installing-python-packages-from-jupyter/), Jupyter notebook's kernel is disconnected from Jupyter's shell, so activating a local environment in your shell may necessarily make the NLP packages available in the notebook. If this is the case, there is code in the notebook to install the necessary packages directly, just uncomment and run the cells.
+For reasons documented [here](https://jakevdp.github.io/blog/2017/12/05/installing-python-packages-from-jupyter/), a Jupyter notebook's kernel is disconnected from the shell that you launched it from, so activating a local environment in your shell may not necessarily make the NLP packages available in the notebook. If this is the case, there is code in the notebook to install several  of the necessary packages directly, just uncomment and run the cells.
 
-For the scraper, because it uses the Selenium webdriver to control a browser, you'll also need to download the appropriate webdriver executable and add it to your local `PATH`. Popular options are Firefox's [geckodriver](https://github.com/mozilla/geckodriver/) or Chromium's [chromedriver](https://sites.google.com/a/chromium.org/chromedriver/), with [other browser support found here](https://selenium.dev/documentation/en/getting_started_with_webdriver/browsers/).
+For the scraper, because it uses the Selenium webdriver to control a browser, you'll also need to download the appropriate webdriver executable and add it to your local `PATH`. Some popular options are:
+
+- [Firefox's geckodriver](https://github.com/mozilla/geckodriver/)
+- [Chromium's chromedriver](https://sites.google.com/a/chromium.org/chromedriver/)
+- [Other browser support](https://selenium.dev/documentation/en/getting_started_with_webdriver/browsers/)
 
 To actually run the scraper, first clone the project and navigate to it in your local directory. Then use the following commands to activate the environment and run the scraper:
 
 ```bash
-conda activate wotus
+conda activate webby
 python scraper.py
 ```
 
