@@ -1,12 +1,12 @@
 #!/usr/bin/env python3
 
 '''
-Uses Anaconda environment "wotus" with Selenium (to load JavaScript on the page
+Uses Anaconda environment "webby" with Selenium (to load JavaScript on the page
     with the content), then Beautiful Soup to parse the HTML:
     - Navigate into the project folder
     - Create environment:
-        `conda env create --file environment.yml`
-    - Switch to environment: `conda activate wotus`
+        `conda env create --file environment_webby.yml`
+    - Switch to environment: `conda activate webby`
     - Run script: `python scraper.py`
     - Deactivate the environment when done: `conda deactivate`
 Notes:
