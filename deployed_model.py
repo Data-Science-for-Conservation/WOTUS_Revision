@@ -20,8 +20,8 @@ Welcome to the live version of the WOTUS sentiment classifier!
 
 Enter your comment about the EPA and Army's proposed re-definition of "Waters
 of the United States" and see whether the model classifies it as "Opposing" or
-"Supportive" of the rule change, along with the probability of receiving that
-label.
+"Supportive" of the rule change. The model also outputs the probability (or
+confidence) it assigns to that label.
 
 Additional project resources include a full
 [project writeup](https://data-science-for-conservation.github.io/WOTUS_Revision/)
