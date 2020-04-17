@@ -1,3 +1,4 @@
+import pickle
 import pandas as pd
 from sklearn.preprocessing import normalize
 from sklearn.feature_extraction.text import TfidfVectorizer, CountVectorizer
@@ -6,7 +7,7 @@ from sklearn.decomposition import NMF
 from sklearn.linear_model import LogisticRegression
 import spacy
 
-from Tokenizer.tokenizer import external_spacy_tokenizer
+# from Tokenizer.tokenizer import external_spacy_tokenizer
 
 
 def get_X_train_comments(path):
@@ -30,14 +31,28 @@ def get_upsamp_labeled_comments(path):
     return X_up_train, y_up_train
 
 
-def load_lang_model():
-    return spacy.load('en_core_web_sm',
-                      disable=['tagger', 'parser', 'ner'])
+# def load_lang_model():
+#     return spacy.load('en_core_web_sm',
+#                       disable=['tagger', 'parser', 'ner'])
 
 
-def get_stop_words(nlp):
-    stop_words = list(nlp.Defaults.stop_words)
-    return external_spacy_tokenizer(' '.join(stop_words))
+# def get_stop_words(nlp):
+#     stop_words = list(nlp.Defaults.stop_words)
+#     return external_spacy_tokenizer(' '.join(stop_words))
+
+
+def tokenizer(doc):
+    """
+    Applies spaCy's built-in tokenizer pipeline capabilities to
+        to keep a lemmatized version of each token for alpha-
+        numeric non-stop words only (excludes punctuation and whitespace)
+    :param doc: string
+    :return: list of lemmatized tokens found in `doc`
+    """
+    nlp = spacy.load('en_core_web_sm',
+                     disable=['tagger', 'parser', 'ner'])
+    return ([token.lemma_ for token in nlp(doc)
+             if (token.lemma_.isalnum() and not token.is_stop)])
 
 
 def train_sent_clf(X_up, y_up, tokenizer, stop_words):
@@ -108,21 +123,21 @@ def get_n_sims_w_labels(similarities, y, n_largest):
 
 def main():
     # Data paths
-    X_train_path = './Data/X_train.pkl'
     upsamp_path = './Data/upsamp_train.pkl'
+    X_train_path = './Data/X_train.pkl'
     all_lab_path = './Data/full_labeled.pkl'
 
     # Load language model, get stop words list for tokenizers
-    nlp = load_lang_model()
-    ex_tokenized_stop_words = get_stop_words(nlp)
+    # nlp = load_lang_model()
+    # ex_tokenized_stop_words = get_stop_words(nlp)
 
     X_up, y_up = get_upsamp_labeled_comments(upsamp_path)
 
     print('Training Sentiment CLF')
 
     sent_clf = train_sent_clf(X_up, y_up,
-                              external_spacy_tokenizer,
-                              ex_tokenized_stop_words)
+                              tokenizer,
+                              None)
 
     test_comment = """This revision removes bodies of water that are important
     for pollution filtration, nutrient cycling, among other ecosystem services.
@@ -130,21 +145,27 @@ def main():
     from degradation!"""
 
     print(sent_clf.predict_proba([test_comment]))
-    print('Training NMF Model')
+
+    with open('sent_clf_scriptmod.pkl', 'wb') as f:
+        pickle.dump(sent_clf, f)
+
+    print('Sentiment Classifier - > DONE')
+    # print('-' * 50)
+    # print('Training NMF Model')
 
     # Train NMF on all comments, apply to labeled-only
-    X_train = get_X_train_comments(X_train_path)
-    X_all_labeled, y_all_labeled = get_all_labeled_comments(all_lab_path)
+    # X_train = get_X_train_comments(X_train_path)
+    # X_all_labeled, y_all_labeled = get_all_labeled_comments(all_lab_path)
 
-    nmf_pipe = train_nmf_model(X_train,
-                               external_spacy_tokenizer,
-                               ex_tokenized_stop_words)
+    # nmf_pipe = train_nmf_model(X_train,
+    #                            tokenizer,
+    #                            None)
 
-    feats_df = get_nmf_feats(X_all_labeled, nmf_pipe)
-    similarities = cosine_sim(feats_df, nmf_pipe, test_comment)
-    df_n_largest = get_n_sims_w_labels(similarities, y_all_labeled, 5)
+    # feats_df = get_nmf_feats(X_all_labeled, nmf_pipe)
+    # similarities = cosine_sim(feats_df, nmf_pipe, test_comment)
+    # df_n_largest = get_n_sims_w_labels(similarities, y_all_labeled, 5)
 
-    print(df_n_largest)
+    # print(df_n_largest)
 
 
 if __name__ == '__main__':
