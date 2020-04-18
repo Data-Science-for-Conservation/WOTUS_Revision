@@ -3,16 +3,17 @@
 - Overview of project
 - What is Machine Learning, how to do it in Python
 - Why text is important, what is NLP, how to handle in ML
-- How to convert text to machine-friendly format (3 count/freq-based methods, 1 slightly more sophisticated one that takes language semantics into account)
-- Four different ML tasks performed on comment dataset
+- Vectorizing: how to convert text to machine-friendly format (3 count/freq-based methods, 1 slightly more sophisticated one that takes language semantics into account)
+- Clustering
+- Sentiment Classifier
 
 ## Project Overview
 
 - Project examines public comments that were submitted for a proposed environmental rule change
 - In 2015, the Obama administration ran a similar process to revise the definition of "Waters of the United States" to include temporary and ephemeral waterways
     - Waterways under the WOTUS definition qualify under Federal protection, meaning Clean Water Act
-    - Pushback from industry - not clearly defined, hard to understand what regulations
-    - Arid
+    - Pushback from industry - not clearly defined, hard to understand what regulations apply to their land
+    - Arid climates 
 - 60 day comment period 
 - Comments weren't a vote, so any sentiment I had to interpret and label myself
     - Benefit of process was since it required people to be proactive (go to site, find docket, type out comment/attachment), they were polarized.
