@@ -11,7 +11,7 @@
 
 This project applies Natural Language Processing (NLP) techniques to analyze the publicly submitted comments in response to the revised definition of "Waters of the United States" (WOTUS).
 
-In early 2017, President Trump signed an Executive Order<sup>[1](#footnote1)</sup> requesting that agencies review a 2015 rule put in place by the Obama administration regarding WOTUS. The agencies, including the Environmental Protection Agency (EPA) and the Department of the Army, were instructed to rescind or replace the rule, in accordance with law.
+In early 2017, President Trump signed an Executive Order<sup>[1](#footnote1)</sup> requesting that agencies review a 2015 rule (The Clean Water Rule: defining "Waters of the United States") put in place under the Obama administration. The agencies, including the Environmental Protection Agency (EPA) and the Department of the Army, were instructed to rescind or replace the rule, in accordance with law.
 
 The agencies have since conducted a reevaluation and revision of the definition of WOTUS. Their proposed rule redefined the scope of waters federally regulated under the Clean Water Act (CWA), and therefore adjusted which waterways now fall under federal authority. The proposed revisions were open for public comment for 60 days until April 15, 2019, and the revised rule took effect on December 23, 2019. With some exceptions, the comments generally fell into one of two buckets: they were either supportive of the proposed re-definition or opposed to changes to the 2015 rule.
 
@@ -19,20 +19,23 @@ This project analyzes the content of the comments that are publicly available in
 
 ## Data Collection and Analysis
 
-The comments were collected by running a web scraping program (`./scraper.py`) that builds in ample wait times so as not to overload the website with requests. It looped over all public submissions in the docket that weren't contained in an attachment. This resulted in an unlabeled dataset of just over 8K comments. Once the data were collected, a random sample of 1,200 comments were manually labeled, then a variety of Natural Language Processing (NLP) techniques were applied.
+The comments were collected by running a web-scraping program (`./scraper.py`) that builds in ample wait times so as not to overload the website with requests. It looped over all public submissions in the docket that weren't contained in an attachment. This resulted in an unlabeled dataset of just over 8K comments. Once the data were collected, a random sample of 1,200 comments were manually labeled, then a variety of Natural Language Processing (NLP) techniques were applied.
 
 ## Setting Up the Local Environment
 
 This project uses the [Anaconda distribution](https://www.anaconda.com/distribution/) to manage Python packages. There are two separate environments with all necessary respective packages to run the web scraper (`./environment_webby.yml`) and the NLP analysis (`./environment_nlp.yml`). If you're using Anaconda as well, you can run the following commands to re-create either environment locally, then activate it.
 
 ```bash
+# nlp environment to run analysis:
 conda env create --file environment_nlp.yml
-conda activate
+conda activate nlp
+
+# webby environment to run the scraper:
+conda env create --file environment_webby.yml
+conda activate webby
 ```
 
 (If you don't like the name of either environment, you can edit the first line of your local versions of the `.yml` files and change it to whatever name you'd prefer before creating it.)
-
-For reasons documented [here](https://jakevdp.github.io/blog/2017/12/05/installing-python-packages-from-jupyter/), a Jupyter notebook's kernel is disconnected from the shell that you launched it from, so activating a local environment in your shell may not necessarily make the NLP packages available in the notebook. If this is the case, there is code in the notebook to install several  of the necessary packages directly, just uncomment and run the cells.
 
 For the scraper, because it uses the Selenium webdriver to control a browser, you'll also need to download the appropriate webdriver executable and add it to your local `PATH`. Some popular options are:
 
