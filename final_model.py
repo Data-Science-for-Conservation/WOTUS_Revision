@@ -1,3 +1,8 @@
+"""
+Script to re-create the final models prototyped in the WOTUS_analysis.ipynb
+    notebook and save to pickled objects for the web app to run.
+"""
+
 import pickle
 import pandas as pd
 from sklearn.preprocessing import normalize
