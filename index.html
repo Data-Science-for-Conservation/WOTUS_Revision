@@ -13,15 +13,16 @@
   <title>WOTUS Public Comments Analysis</title>
 </head>
 <body>
-  <h1>Analysis of Public Comments Regarding the Revised Definition of "Waters of the United States"</h1>
+  <h1>Politics and Perplexity in Python</h1>
+  <h2>An Analysis of Public Comments on Changes to the Clean Water Rule</h2>
 
   <p>
-    This project applies Natural Language Processing (NLP) techniques to analyze the publicly submitted comments in response to the revised definition of "Waters of the United States" (WOTUS), including:
+    This project applies Natural Language Processing (NLP) techniques to analyze publicly submitted comments in response to proposed changes to the definition of "Waters of the United States" (WOTUS) under the Clean Water Rule, including:
   </p>
 
   <ul>
     <li><span class="bold">Topic Analysis</span> to understand the reasons commenters gave for their support or opposition to the rule change</li>
-    <li><span class="bold">Similarity Analysis</span> to find similar (potentially labeled) comments to a new or unseen one</li>
+    <li><span class="bold">Similarity Analysis</span> to find similar comments to a new or unseen one</li>
     <li><span class="bold">Clustering Analysis</span> to find structure in the un-labeled dataset, and potentially to act as a proxy for sentiment analysis</li>
     <li><span class="bold">Sentiment Analysis</span> (performed after labeling a subset of comments) to train a classifier to identify comments as either supportive or opposing the rule change</li>
   </ul>
@@ -48,7 +49,7 @@
   <h2><a name="background"></a>Project Background</h2>
 
   <p>
-    In early 2017, President Trump signed an Executive Order<sup><a href="#footnote1">1</a></sup> requesting that agencies review a 2015 rule regarding the "Waters of the United States". WOTUS defines the scope of waters federally regulated under the Clean Water Act (CWA). The agencies, including the Environmental Protection Agency (EPA) and the Department of the Army, were instructed to rescind or replace the rule, in accordance with law.
+    In early 2017, President Trump signed an Executive Order<sup><a href="#footnote1">1</a></sup> requesting that agencies review a 2015 rule (the "Clean Water Rule") regarding the definition of "Waters of the United States". WOTUS defines the scope of waters that fall under federal jurisdiction, and are therefore regulated under the Clean Water Act (CWA). The agencies, including the Environmental Protection Agency (EPA) and the Department of the Army, were instructed to rescind or replace the rule, in accordance with law.
   </p>
 
   <p>
@@ -88,11 +89,11 @@
   <h3>Challenge 2: Nature of the Dataset</h3>
 
   <p>
-    The dataset is comprised of unstructured, unlabeled text. The lack of labeled data restricted the analysis to unsupervised learning techniques at first. However, a sample of 1,200 comments were manually labeled to gauge the performance of clustering analysis (as a proxy for sentiment analysis) and to enable classification and sentiment analysis. Of course, this further limited the size of the dataset and having more labeled observations would likely improve the performance of the models.
+    The dataset is comprised of unstructured, unlabeled text. The lack of labeled data restricted the analysis to unsupervised learning techniques at first. However, a sample of 1,200 comments were manually labeled to gauge the performance of clustering analysis (as a proxy for sentiment analysis) and to enable classification and sentiment analysis. Of course, this further limited the size of the dataset and having more labeled observations potentially could have improved the performance of the models.
   </p>
 
   <p>
-    Finally, the overlap of the language used in many comments added to the challenge of finding distinct topics or clusters. Training models to find context from "bag of words" representations turned out to be quite difficult. Below are two example excerpts from comments - both mentioning agriculture and the need for clean water - but they are on opposing sides of the issue:
+    Finally, the overlap of the language used in many comments added to the challenge of finding distinct topics or clusters. Training unsupervised models to find context from "bag of words" representations turned out to be quite difficult. Below are two example excerpts from comments - both mentioning agriculture and the need for clean water - but they are on opposing sides of the issue:
   </p>
 
   <table>
@@ -117,7 +118,7 @@
   <h2><a name="eda"></a>Exploratory Data Analysis</h2>
 
   <p>
-    Word clouds can be useful to get an overview of the most common words (or bigrams, as in the analysis below) in a dataset of text. The first image was created using the entire training set, and provides a nice sanity check that the comments are generally about clean water. For example, if "immigration" showed up in the plot, it would raise concerns about the integrity of the collected comments. But as expected, the most common bigram was "clean water". A closer inspection of the smaller-sized bigrams also uncovers the more opinionated phrases, such as "polluting industries", "dirty water", "clear rule", or "common sense".
+    Word clouds can be useful to get an overview of the most common words (or <i>bigrams</i> - two-word combinations - as in the analysis below) in a dataset of text. The first image was created using the entire training set, and provides a nice sanity check that the comments are generally about clean water. For example, if "immigration" showed up in the plot, it would raise concerns about the integrity of the collected comments. But as expected, the most common bigram was "clean water". A closer inspection of the smaller-sized bigrams also uncovers the more opinionated phrases, such as "polluting industries", "dirty water", "clear rule", or "common sense".
   </p>
 
   <img alt="Image showing the most common 2-word combinations from the full training set" src="./webpg_assets/wordcloud_all.png">
@@ -281,7 +282,7 @@
 
   <blockquote>In information theory, <bold>perplexity</bold> is a measurement of how well a probability distribution or probability model predicts a sample. It may be used to compare probability models. A low perplexity indicates the probability distribution is good at predicting the sample.</blockquote>
 
-  <p>Low perplexity scores are better, but there's a practical trade-off with the number of topics. They need to be interpretable to a human and different enough to have value in a practical application. This analysis employed the "elbow" method as guidance to find the appropriate number of topics to balance of score and, after introspection, utility in the topics.</p>
+  <p>Low perplexity scores are better, but there's a practical trade-off with the number of topics. They need to be interpretable to a human and different enough to have value in a practical application. This analysis employed the "elbow" method as guidance to find the appropriate number of topics to balance the score and, after introspection, the utility of the topics.</p>
 
   <p>
     <img alt="Line chart showing declining perplexity scores by number of topics" src="./webpg_assets/LDA_Perplexity_for_nTopics.png">
@@ -337,13 +338,14 @@
   <h2><a name="similarity"></a>Finding Similar Comments via Non-Negative Matrix Factorization</h2>
 
   <p>
-    An eight-topic non-negative matrix factorization (NMF) model was fit to the training data. The topics closely matched the ones the LDA model found, but the goal for this model was to calculate cosine similarity on normalized comment vectors in order to find similar comments. This could then be applied to perform either batch-labeling (find the similar comments to a known, labeled one), or to find similar comments to an unseen, new one.
+    An eight-topic non-negative matrix factorization (NMF) model was fit to the training data. The topics closely matched the ones the LDA model found, which was a nice cross-check of the results from that analysis, but the goal for this model was to find "similar" comments, not topics. This functionality could then be applied to perform either batch-labeling (find the similar comments to a known, labeled one), or to find similar comments to an unseen, new one.
+  </p>
+
+  <p>
+    Given how each comment was processed into a term-frequency vector, this analysis defined and calculated "similarity" using the cosine value between vectors. With a bag-of-words processing approach, the values in each comment vector align with how many times certain vocabulary words show up in that comment. Therefore, comments with similar vocabulary will have similar vectors, and will therefore 'point' in similar directions in hyperspace.
   </p>
   <p>
-    Cosine similarity is a simple application of a math concept to test how similar comments (or any documents) are to each other. The training data term-frequency matrix rows represent a vector for each comment, where the values in the vector align with how many times certain vocabulary words show up in that comment. Comments with similar vocabulary will have similar vectors, and will therefore point in similar directions in hyperspace.
-  </p>
-  <p>
-    The <code>cosine</code> of the angle created between any two comment vectors can indicate how similar their vocabulary is - the smaller the angle between the vectors, the higher the value of the <code>cosine(angle)</code> is (recall that <code>cosine(0) = 1</code>, which is the upper bound of the function's range). Therefore, cosine values near one indicate similarity. Likewise, as the language between comments diverges, that angle becomes larger, and the cosine value moves closer to zero. Because NMF doesn't allow for negative values, the resulting <code>cosine</code> values never go below zero.
+    The <code>cosine</code> of the angle created between any two comment vectors can indicate how similar their vocabulary is - the smaller the angle between the vectors, the higher the value of the <code>cosine(angle)</code> is (recall that <code>cosine(0) = 1</code>, which is the upper bound of the function's range). Therefore, cosine values near one indicate similarity. Likewise, as the language between comments diverges, that angle becomes larger, and the cosine value moves closer to zero. Because NMF doesn't allow for negative values, the resulting <code>cosine</code> values are bounded between zero and one.
   </p>
   <p>
     Two labeled comments (one supportive and one opposing) were randomly selected from the test set and run through the NMF pipeline. The tables below show the most similar comments in the training set as well as the <code>cosine</code> value between the test comment and those training comments. Note that personally identifying information about the commenter (such as their address) was removed from some comments.
