@@ -34,6 +34,7 @@
     <li><a href="#background">Project Background</a></li>
     <li><a href="#challenges">Project Challenges</a></li>
     <li><a href="#eda">Exploratory Data Analysis</a></li>
+    <li><a href="#processing">Data Processing</a></li>
     <li><a href="#topic">Topic Analysis with Latent Dirichlet Allocation</a></li>
     <li><a href="#similarity">Finding Similar Comments via Non-Negative Matrix Factorization</a></li>
     <li><a href="clustering">Clustering Analysis</a></li>
@@ -272,6 +273,18 @@
       </tr>
     </tbody>
   </table>
+
+
+  <!-- DATA PROCESSING SECTION -->
+  <h2><a name="processing"></a>Data Processing</h2>
+
+  <p>
+    In order to leverage the power of the machine learning models underpinning the various analyses, it was necessary to convert the comments into a numeric representation. Several techniques were compared, ranging from simple bag-of-word count vectorizations to more advanced word embedding models via the SpaCy library. Other parameters, such as applying lemmatization, including bigrams, and ignoring rare words were tested as well.
+  </p>
+
+  <p>
+    The results from the clustering analysis and sentiment analysis helped home in on the best vectorized representation for this dataset for each respective task. In general, each method converted the variable-length comments into a matrix of numbers that were usable in the Scikit-Learn models.
+  </p>
 
 
   <!-- TOPIC ANALYSIS SECTION -->
