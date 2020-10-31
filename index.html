@@ -444,20 +444,46 @@
   <h2><a name="clustering"></a>Clustering Analysis</h2>
 
   <p>
-    The clustering analysis was performed before a sample of comments were labeled to see if there were underlying structures that separated supporting versus opposing comments. Unfortunately, while the results could loosely support two clusters, the clusters themselves didn't properly distinguish comments by their position. After analyzing the results of a two-cluster KMeans model, it seemed the comments were separated more by topic than position.
+    The clustering analysis was performed before a sample of comments were labeled to see if there existed an underlying structure within the comment language that separated supporting versus opposing comments. Unfortunately, while the results could loosely support two clusters, the clusters themselves didn't properly distinguish comments by their position. After analyzing the results of a two-cluster KMeans model, it seemed the comments were separated more by topic than position.
   </p>
 
   <p>
-    [Different vectorizers, metrics to compare, results]
+    Not surprisingly, the pre-processing choices for how to convert the text into a term-document matrix impacted the clustering results. A KMeans minibatch model was run for all vectorization techniques using a range of two to twelve clusters. The following metrics were used to compare them. The model with the best quantitative results also got a qualitative review of a sample of comments to determine whether the clusters were useful.
+  </p>
+
+  <ul>
+    <li><span class="bold">Inertia:</span> the total distance of all points from their assigned cluster's centroid. This typically goes down as more clusters are added, and thus is generally used with the "elbow method" to determine the point where the trade-off of adding a new cluster isn't worth the reduction in inertia</li>
+    <li><span class="bold">Inertia Times the Number of Clusters:</span> adjusts inertia scores to penalize for more clusters. The minimum of this metric is generally the trade-off point where the reduction in inertia balances with the number of clusters</li>
+    <li><span class="bold">Silhouette Score:</span> a value ranging from -1 to 1 that indicates how separate and tightly packed the clusters are. The calculation compares distances of points to their centroid versus to the next nearest cluster centroid. The more distinct and tight a cluster is, the closer the score is to 1, whereas amorphous, overlapping clusters are in the 0 to -1 range</li>
+  </ul>
+
+  <p>
+    There weren't any major takeaways from the inertia scores by method. No method showed a clear "elbow" and all showed a minimum inertia-times-clusters at two clusters, meaning the drop in inertia by adding a new cluster wasn't necessarily worth it. However, the silhouette scores distinctly showed that the count vectorizer model generated clusters that were generally more distinct and separate than the other methods. The chart below shows the silhouette score by pre-processing method for models ranging from two to twelve clusters.
+  </p>
+
+  <img alt="Line chart showing silhouette score by vectorization method - the count vectorizer in general out-scored all other methods." src="./webpg_assets/Clustering-AllSilhouetteScores.png">
+
+  <p>
+    The following charts show all the metrics from the count vectorizer models.
+  </p>
+
+  <img src="./webpg_assets/MiniBatchKMeans_Count_Inertia-Silhouette.png">
+
+  <p>
+    Once the quantitative metrics helped narrow down the field to a model using count vectorized data, the next step was to examine the results qualitatively and visually. First, a sample of comments were read from each cluster. This turned out to be the first indication that there was a lot of overlap in the two clusters - both clusters had comments from each side.
   </p>
 
   <p>
-    To examine the clustering results, first a sample of comments were read from each cluster. This turned out to be the first indication that there was a lot of overlap of comment position in the two clusters. To further verify the lackluster outcome, two dimensionality reduction techniques were employed - Principal Component Analysis (PCA) and TSNE - to visualize the clusters in 2D. A sample of comments were then labeled and colored and included in the charts to show the ground truth of a comment's support or opposition. Below are the resulting charts, which are all based on data preprocessed with the count vectorizer.
+    Second, two dimensionality reduction techniques were employed - Principal Component Analysis (PCA) and TSNE - to visualize the clusters in 2D. A sample of comments were then labeled and colored and included in the charts to show the ground truth of a comment's support or opposition. Below are the resulting charts.
   </p>
 
   <img alt="Summary Principal Component Analysis charts: (left) a scatter plot of clusters showing a lot of overlap of supportive and opposing comments in a non-distinct cluster blob, and (right) a bar chart of explained variance of top PCA features, with the first component explains ~28% and second explains ~7% of the variance." src="./webpg_assets/PCA-BOW.png">
 
   <img alt="TSNE visualization showing blobby groups with some separation of ground truth supporting and opposing comments, but not clearly tied to the clusters." src="./webpg_assets/TSNE-BOW.png">
+
+  <p>
+    As noted above, the clustering analysis was not a home run to distinguish the position of a comment. The KMeans model and dimensionality reduction techniques uncovered some stucture within the vectorized data, but unfortunately, it didn't seem to hinge on the language being supportive of the rule change or opposed to it.
+  </p>
 
 
   <!-- SENTIMENT ANALYSIS SECTION -->
@@ -499,12 +525,6 @@
     TO COME
   </p>
 
-
-  <h3>General</h3>
-
-  <p>
-    Not surprisingly, the pre-processing choices for how to convert the text to a numeric representation (the term-document matrix) impacted the outcome of the models. While this is measurable in supervised learning techniques by reviewing model performance, it was more of a challenge with the unsupervised models. Where possible, quantitative metrics were used to compare the different pre-processing approaches - these included <code>perplexity</code> in the topic analysis or <code>inertia</code> and <code>silhouette score</code> in the clustering analysis. However, at a certain point, there was a need for more qualitative and subjective measures (particularly with topic analysis) to determine what constituted the best results.
-  </p>
 
   <footer>
     <p>
