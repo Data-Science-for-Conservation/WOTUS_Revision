@@ -14,13 +14,15 @@
 </head>
 <body>
   <h1>Politics and Perplexity in Python</h1>
-  <h2>An Analysis of Public Comments on Changes to the Clean Water Rule</h2>
+  <h2>An Analysis of Public Comments Regarding Changes to the 2015 Clean Water Rule</h2>
 
   <p>
-    This project applies Natural Language Processing (NLP) techniques to analyze publicly submitted comments in response to proposed changes to the definition of "Waters of the United States" (WOTUS) under the Clean Water Rule, including:
+    This project applies Natural Language Processing (NLP) techniques to analyze publicly-submitted comments in response to proposed changes to the 2015 Clean Water Rule, namely around the re-definition of "Waters of the United States" (WOTUS). The scope of the project includes:
   </p>
 
   <ul>
+    <li><span class="bold">Data Collection</span> done via a webscraping script to collect the text of all comments posted in the docket</li>
+    <li><span class="bold">Exploratory Data Analysis</span> to visualize comment vocabulary and differences between supporting or opposing comments</li>
     <li><span class="bold">Topic Analysis</span> to understand the reasons commenters gave for their support or opposition to the rule change</li>
     <li><span class="bold">Similarity Analysis</span> to find similar comments to a new or unseen one</li>
     <li><span class="bold">Clustering Analysis</span> to find structure in the un-labeled dataset, and potentially to act as a proxy for sentiment analysis</li>
@@ -31,8 +33,7 @@
   <p><span class="bold">Page Contents</span><p>
 
   <ul>
-    <li><a href="#background">Project Background</a></li>
-    <li><a href="#challenges">Project Challenges</a></li>
+    <li><a href="#overview">Project Overview</a></li>
     <li><a href="#eda">Exploratory Data Analysis</a></li>
     <li><a href="#processing">Data Processing</a></li>
     <li><a href="#topic">Topic Analysis with Latent Dirichlet Allocation</a></li>
@@ -47,23 +48,19 @@
 
 
   <!-- PROJECT BACKGROUND SECTION -->
-  <h2><a name="background"></a>Project Background</h2>
+  <h2><a name="overview"></a>Project Overview: Background and Challenges</h2>
 
   <p>
-    In early 2017, President Trump signed an Executive Order<sup><a href="#footnote1">1</a></sup> requesting that agencies review a 2015 rule (the "Clean Water Rule") regarding the definition of "Waters of the United States". WOTUS defines the scope of waters that fall under federal jurisdiction, and are therefore regulated under the Clean Water Act (CWA). The agencies, including the Environmental Protection Agency (EPA) and the Department of the Army, were instructed to rescind or replace the rule, in accordance with law.
+    In early 2017, President Trump signed an Executive Order<sup><a href="#footnote1">1</a></sup> requesting that agencies review a 2015 rule (the "Clean Water Rule") regarding the definition of "Waters of the United States". WOTUS establishes the scope of waters that fall under federal jurisdiction, meaning that they are regulated under the Clean Water Act (CWA). The agencies, including the Environmental Protection Agency (EPA) and the Department of the Army, were instructed to rescind or replace the rule, in accordance with law.
   </p>
 
   <p>
-    The agencies have since conducted a reevaluation and revision of the definition of WOTUS. This rule was open for public comment for 60 days until April 15, 2019, and the revised rule took effect on December 23, 2019. The comments are available under "Public Submissions" for docket EPA-HQ-OW-2018-0149 on the <a target="blank" href="https://www.regulations.gov/docket?D=EPA-HQ-OW-2018-0149">regulations.gov web page</a>.
+    The agencies have since conducted a reevaluation and revision of the definition of WOTUS. This new rule was open for public comment for 60 days until April 15, 2019, and the revised rule took effect on December 23, 2019. The comments are available under "Public Submissions" for docket EPA-HQ-OW-2018-0149 on the <a target="blank" href="https://www.regulations.gov/docket?D=EPA-HQ-OW-2018-0149">regulations.gov web page</a>.
   </p>
 
   <p>
     With some exceptions, the comments generally fell into one of two buckets: they were either supportive of the proposed re-definition or opposed to changes to the 2015 rule.
   </p>
-
-
-  <!-- PROJECT CHALLENGES SECTION -->
-  <h2><a name="challenges"></a>Project Challenges</h2>
 
   <p>
     The challenges of this project fell into two broad categories - ones relating to data collection and ones associated with the nature of the dataset.
@@ -80,7 +77,7 @@
   </blockquote>
 
   <p>
-    Second, the project relied on a web scraper<sup><a href="#footnote2">2</a></sup> to actually collect the text of the comments in the docket. The regulations.gov website has an API to request data, however, only organizations (not individuals) qualify for an API key. The text of approximately 3K of the available 11K comments were locked in attachments (PDF or image formats) and unavailable to the scraper.
+    Second, the project relied on a web scraper<sup><a href="#footnote2">2</a></sup> to actually collect the text of the comments in the docket. The regulations.gov website has an API to request data, however, only organizations (not individuals) qualify for an API key. The text of approximately 3K of the available 11K comments were locked in attachments (PDF or image formats) and unavailable to the scraper. Even with an API key, it's unclear if the text of those comments would be accessible without additional software.
   </p>
 
   <p>
@@ -90,11 +87,11 @@
   <h3>Challenge 2: Nature of the Dataset</h3>
 
   <p>
-    The dataset is comprised of unstructured, unlabeled text. The lack of labeled data restricted the analysis to unsupervised learning techniques at first. However, a sample of 1,200 comments were manually labeled to gauge the performance of clustering analysis (as a proxy for sentiment analysis) and to enable classification and sentiment analysis. Of course, this further limited the size of the dataset and having more labeled observations potentially could have improved the performance of the models.
+    The dataset is comprised of unstructured, unlabeled text. The lack of labeled data restricted the analysis to unsupervised learning techniques at first. However, a sample of 1,200 comments were manually labeled to gauge the performance of clustering analysis (as a proxy for sentiment analysis) and to enable the supervised sentiment analysis. Of course, this further limited the size of the dataset and having more labeled observations potentially could have improved the performance of the models.
   </p>
 
   <p>
-    Finally, the overlap of the language used in many comments added to the challenge of finding distinct topics or clusters. Training unsupervised models to find context from "bag of words" representations turned out to be quite difficult. Below are two example excerpts from comments - both mentioning agriculture and the need for clean water - but they are on opposing sides of the issue:
+    Finally, the overlap of the language used in many comments added to the challenge of finding distinct topics or clusters. Training unsupervised models to find context from a "bag of words" representation turned out to be quite difficult. Below are two example excerpts from comments - both mentioning agriculture and the need for clean water - but they are on opposing sides of the issue:
   </p>
 
   <table>
@@ -119,7 +116,7 @@
   <h2><a name="eda"></a>Exploratory Data Analysis</h2>
 
   <p>
-    Word clouds can be useful to get an overview of the most common words (or <i>bigrams</i> - two-word combinations - as in the analysis below) in a dataset of text. The first image was created using the entire training set, and provides a nice sanity check that the comments are generally about clean water. For example, if "immigration" showed up in the plot, it would raise concerns about the integrity of the collected comments. But as expected, the most common bigram was "clean water". A closer inspection of the smaller-sized bigrams also uncovers the more opinionated phrases, such as "polluting industries", "dirty water", "clear rule", or "common sense".
+    Word clouds proved to be useful to get an overview of the most common words (or <i>bigrams</i> - two-word combinations - as in the analysis below) in the dataset. The first image was created using the entire training set, and provides a nice sanity check that the comments are generally about clean water. For example, if "immigration" showed up in the plot, it would raise concerns about the integrity of the collected comments. But as expected, the most common bigram was "clean water". A closer inspection of the smaller-sized bigrams also uncovers the more opinionated phrases, such as "polluting industries", "dirty water", "clear rule", or "common sense".
   </p>
 
   <img alt="Image showing the most common 2-word combinations from the full training set" src="./webpg_assets/wordcloud_all.png">
@@ -446,7 +443,21 @@
   <!-- CLUSTERING ANALYSIS SECTION -->
   <h2><a name="clustering"></a>Clustering Analysis</h2>
 
-  <p>TO COME</p>
+  <p>
+    The clustering analysis was performed before a sample of comments were labeled to see if there were underlying structures that separated supporting versus opposing comments. Unfortunately, while the results could loosely support two clusters, the clusters themselves didn't properly distinguish comments by their position. After analyzing the results of a two-cluster KMeans model, it seemed the comments were separated more by topic than position.
+  </p>
+
+  <p>
+    [Different vectorizers, metrics to compare, results]
+  </p>
+
+  <p>
+    To examine the clustering results, first a sample of comments were read from each cluster. This turned out to be the first indication that there was a lot of overlap of comment position in the two clusters. To further verify the lackluster outcome, two dimensionality reduction techniques were employed - Principal Component Analysis (PCA) and TSNE - to visualize the clusters in 2D. A sample of comments were then labeled and colored and included in the charts to show the ground truth of a comment's support or opposition. Below are the resulting charts, which are all based on data preprocessed with the count vectorizer.
+  </p>
+
+  <img alt="Summary Principal Component Analysis charts: (left) a scatter plot of clusters showing a lot of overlap of supportive and opposing comments in a non-distinct cluster blob, and (right) a bar chart of explained variance of top PCA features, with the first component explains ~28% and second explains ~7% of the variance." src="./webpg_assets/PCA-BOW.png">
+
+  <img alt="TSNE visualization showing blobby groups with some separation of ground truth supporting and opposing comments, but not clearly tied to the clusters." src="./webpg_assets/TSNE-BOW.png">
 
 
   <!-- SENTIMENT ANALYSIS SECTION -->
@@ -465,13 +476,13 @@
   </p>
 
   <p>
-    The NMF model also proved useful as an efficient way to identify similar comments. This functionality could be extended to batch label comments to broaden the labeled set, allowing for the use of more complex modeling options for the sentiment analysis.
+    The NMF model also proved useful as an efficient way to identify similar comments. This functionality could be extended to batch-label comments to broaden the labeled set, allowing for the use of more complex modeling options for the sentiment classifier. It was also useful as a pseudo k Nearest Neighbors identifier - given a new or unlabeled comment, it could find the most similar labeled ones to determine the more-likely side of the issue the commenter was on.
   </p>
 
   <h3>Clustering Analysis</h3>
 
   <p>
-    The clustering analysis used a KMeans clustering algorithm with two clusters and fit on training data that was pre-processed with the top performing count vectorizer (based on silhouette scores for comparison). After inspecting a sample of comments in each cluster, then performing dimensionality reduction and TSNE to visualize the clusters against a sample of labeled data, the clusters proved to have a lot of overlap of opposing and supportive comments.
+    The final clustering analysis employed a KMeans clustering algorithm with two clusters fit on training data pre-processed with the top performing (based on silhouette scores) count vectorizer. After inspecting a sample of comments in each cluster, then performing dimensionality reduction with Principal Component Analysis and TSNE to visualize the clusters against a sample of labeled data, the clusters proved to have a lot of overlap of opposing and supportive comments.
   </p>
 
   <p>
@@ -482,8 +493,16 @@
     As noted above, one of the challenges with this dataset was how much shared language occured between supporting and opposing comments - "I support the current rule change" vs. "I support the 2015 ruling", or "I want clean water for my grandkids" vs. "I want clean water and clear rules". The "bag of words" preprocessing technique wasn't able to preserve the context that the similar language occured in, and therefore put limitations on the clustering model's ability to be a proxy for sentiment analysis. Pre-processing with different vectorizers, limiting features, and using only bigrams didn't improve the clustering results.
   </p>
 
+  <h3>Sentiment Analysis</h3>
+
   <p>
-    <!-- Moved from Challenges section -->
+    TO COME
+  </p>
+
+
+  <h3>General</h3>
+
+  <p>
     Not surprisingly, the pre-processing choices for how to convert the text to a numeric representation (the term-document matrix) impacted the outcome of the models. While this is measurable in supervised learning techniques by reviewing model performance, it was more of a challenge with the unsupervised models. Where possible, quantitative metrics were used to compare the different pre-processing approaches - these included <code>perplexity</code> in the topic analysis or <code>inertia</code> and <code>silhouette score</code> in the clustering analysis. However, at a certain point, there was a need for more qualitative and subjective measures (particularly with topic analysis) to determine what constituted the best results.
   </p>
 
