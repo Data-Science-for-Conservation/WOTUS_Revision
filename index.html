@@ -24,12 +24,13 @@
   </p>
 
   <ul>
-    <li><span class="bold">Data Collection</span> done via a webscraping script to collect the text of all comments posted in the docket</li>
-    <li><span class="bold">Exploratory Data Analysis</span> to visualize comment vocabulary and differences between supporting or opposing comments</li>
-    <li><span class="bold">Topic Analysis</span> to understand the reasons commenters gave for their support or opposition to the rule change</li>
-    <li><span class="bold">Similarity Analysis</span> to find similar comments to a new or unseen one</li>
-    <li><span class="bold">Clustering Analysis</span> to find structure in the un-labeled dataset, and potentially to act as a proxy for sentiment analysis</li>
-    <li><span class="bold">Sentiment Analysis</span> (performed after labeling a subset of comments) to train a classifier to identify comments as either supportive or opposing the rule change</li>
+    <li><a href="#overview">Data Collection</a> done via a webscraping script to collect the text of all comments posted in the docket</li>
+    <li><a href="#eda">Exploratory Data Analysis</a> to visualize comment vocabulary and differences between supporting or opposing comments</li>
+    <li><a href="#topic">Topic Analysis</a> to understand the reasons commenters gave for their support or opposition to the rule change</li>
+    <li><a href="#similarity">Similarity Analysis</a> to find similar comments to a new or unseen one</li>
+    <li><a href="clustering">Clustering Analysis</a> to find structure in the un-labeled dataset, and potentially to act as a proxy for sentiment analysis</li>
+    <li><a href="sentiment">Sentiment Analysis</a> (performed after labeling a subset of comments) to train a classifier to identify comments as either supportive or opposing the rule change</li>
+    <li><a href="conclusions">Project Conclusions</a> to review key takeaways from each analysis</li>
   </ul>
 
   <!-- Page navigation
@@ -38,9 +39,9 @@
   <ul>
     <li><a href="#overview">Project Overview</a></li>
     <li><a href="#eda">Exploratory Data Analysis</a></li>
-    <li><a href="#processing">Data Processing</a></li>
-    <li><a href="#topic">Topic Analysis with Latent Dirichlet Allocation</a></li>
-    <li><a href="#similarity">Finding Similar Comments via Non-Negative Matrix Factorization</a></li>
+    <li><a href="#preprocessing">Data Pre-Processing</a></li>
+    <li><a href="#topic">Topic Analysis</a></li>
+    <li><a href="#similarity">Similarity Analysis</a></li>
     <li><a href="clustering">Clustering Analysis</a></li>
     <li><a href="sentiment">Sentiment Analysis</a></li>
     <li><a href="conclusions">Project Conclusions</a></li>
@@ -50,7 +51,7 @@
   <p></p>
 
 
-  <!-- PROJECT BACKGROUND SECTION -->
+  <!-- PROJECT OVERVIEW SECTION -->
   <h2><a name="overview"></a>Project Overview: Background and Challenges</h2>
 
   <p>
@@ -275,8 +276,8 @@
   </table>
 
 
-  <!-- DATA PROCESSING SECTION -->
-  <h2><a name="processing"></a>Data Processing</h2>
+  <!-- DATA PRE-PROCESSING SECTION -->
+  <h2><a name="preprocessing"></a>Data Pre-Processing</h2>
 
   <p>
     In order to leverage the power of the machine learning models underpinning the various analyses, it was necessary to convert the comments into a numeric representation. Several techniques were compared, ranging from simple bag-of-word count vectorizations to more advanced word embedding models via the SpaCy library. Other parameters, such as applying lemmatization, including bigrams, and ignoring rare words were tested as well.
