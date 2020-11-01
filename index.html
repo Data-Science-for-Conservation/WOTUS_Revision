@@ -13,41 +13,43 @@
   <title>WOTUS Public Comments Analysis</title>
 </head>
 <body>
-  <h1>Politics and Perplexity in Python</h1>
-  <h2>An Analysis of Public Comments Regarding Changes to the 2015 Clean Water Rule</h2>
+  <h1>
+    Politics and Perplexity in Python<br>
+    <span class="subhead">An Analysis of Public Comments Regarding Changes to the 2015 Clean Water Rule</span>
+  </h1>
+  <hr>
 
   <p>
     This project applies Natural Language Processing (NLP) techniques to analyze publicly-submitted comments in response to proposed changes to the 2015 Clean Water Rule, namely around the re-definition of "Waters of the United States" (WOTUS). The scope of the project includes:
   </p>
 
   <ul>
-    <li><span class="bold">Data Collection</span> done via a webscraping script to collect the text of all comments posted in the docket</li>
-    <li><span class="bold">Exploratory Data Analysis</span> to visualize comment vocabulary and differences between supporting or opposing comments</li>
-    <li><span class="bold">Topic Analysis</span> to understand the reasons commenters gave for their support or opposition to the rule change</li>
-    <li><span class="bold">Similarity Analysis</span> to find similar comments to a new or unseen one</li>
-    <li><span class="bold">Clustering Analysis</span> to find structure in the un-labeled dataset, and potentially to act as a proxy for sentiment analysis</li>
-    <li><span class="bold">Sentiment Analysis</span> (performed after labeling a subset of comments) to train a classifier to identify comments as either supportive or opposing the rule change</li>
+    <li><a href="#overview">Data Collection</a> done via a webscraping script to collect the text of all comments posted in the docket</li>
+    <li><a href="#eda">Exploratory Data Analysis</a> to visualize comment vocabulary and differences between supporting or opposing comments</li>
+    <li><a href="#topic">Topic Analysis</a> to understand the reasons commenters gave for their support or opposition to the rule change</li>
+    <li><a href="#similarity">Similarity Analysis</a> to find similar comments to a new or unseen one</li>
+    <li><a href="clustering">Clustering Analysis</a> to find structure in the un-labeled dataset, and potentially to act as a proxy for sentiment analysis</li>
+    <li><a href="sentiment">Sentiment Analysis</a> (performed after labeling a subset of comments) to train a classifier to identify comments as either supportive or opposing the rule change</li>
+    <li><a href="conclusions">Project Conclusions</a> to review key takeaways from each analysis</li>
   </ul>
 
   <!-- Page navigation
-  <p><span class="bold">Page Contents</span><p>
-
   <ul>
-    <li><a href="#overview">Project Overview</a></li>
-    <li><a href="#eda">Exploratory Data Analysis</a></li>
-    <li><a href="#processing">Data Processing</a></li>
-    <li><a href="#topic">Topic Analysis with Latent Dirichlet Allocation</a></li>
-    <li><a href="#similarity">Finding Similar Comments via Non-Negative Matrix Factorization</a></li>
+    <li><a href="#overview">Overview</a></li>
+    <li><a href="#eda">EDA</a></li>
+    <li><a href="#preprocessing">Data Pre-Processing</a></li>
+    <li><a href="#topic">Topic Analysis</a></li>
+    <li><a href="#similarity">Similarity Analysis</a></li>
     <li><a href="clustering">Clustering Analysis</a></li>
     <li><a href="sentiment">Sentiment Analysis</a></li>
-    <li><a href="conclusions">Project Conclusions</a></li>
+    <li><a href="conclusions">Conclusions</a></li>
   </ul>
    -->
 
   <p></p>
 
 
-  <!-- PROJECT BACKGROUND SECTION -->
+  <!-- PROJECT OVERVIEW SECTION -->
   <h2><a name="overview"></a>Project Overview: Background and Challenges</h2>
 
   <p>
@@ -272,15 +274,27 @@
   </table>
 
 
-  <!-- DATA PROCESSING SECTION -->
-  <h2><a name="processing"></a>Data Processing</h2>
+  <!-- DATA PRE-PROCESSING SECTION -->
+  <h2><a name="preprocessing"></a>Data Pre-Processing</h2>
 
   <p>
-    In order to leverage the power of the machine learning models underpinning the various analyses, it was necessary to convert the comments into a numeric representation. Several techniques were compared, ranging from simple bag-of-word count vectorizations to more advanced word embedding models via the SpaCy library. Other parameters, such as applying lemmatization, including bigrams, and ignoring rare words were tested as well.
+    In order to leverage the power of the machine learning models that underpinned the various analyses, it was necessary to convert the comments into a numeric representation. Several techniques (listed below) were compared, ranging from a simple "bag of word" count vectorization to more advanced word embedding models via the SpaCy library. This was an iterative process that used results from the clustering and sentiment analyses to determine which pre-processing method worked best with this dataset for a given task.
+  </p>
+
+  <ul>
+    <li>Count vectorizer</li>
+    <li>Term Frequency-Inverse Document Frequency (TF-IDF) vectorizer</li>
+    <li>Hashing vectorizer using L2 norm</li>
+    <li>Hashing vectorizer using TF-IDF</li>
+    <li>Document vectors</li>
+  </ul>
+
+  <p>
+    All vectorizer methods used SpaCy's English language model tokenizer and lemmatizer and removed stop words. Also, any word that appeared in fewer than five comments were removed - this helped reduce potential noise from typographical errors, slang, and rare words. Finally, whether to include bigrams or not was tested as well (generally this did not improve results).
   </p>
 
   <p>
-    The results from the clustering analysis and sentiment analysis helped home in on the best vectorized representation for this dataset for each respective task. In general, each method converted the variable-length comments into a matrix of numbers that were usable in the Scikit-Learn models.
+    The final technique didn't use a "bag of words" approach, but instead created a 300-dimension "document vector" by averaging the word vector values from SpaCy's large English language model.
   </p>
 
 
@@ -352,7 +366,7 @@
   </p>
 
   <p>
-    Given how each comment was processed into a term-frequency vector, this analysis defined and calculated "similarity" using the cosine value between vectors. With a bag-of-words processing approach, the values in each comment vector align with how many times certain vocabulary words show up in that comment. Therefore, comments with similar vocabulary will have similar vectors, and will therefore 'point' in similar directions in hyperspace.
+    Given how each comment was processed into a term-frequency vector, this analysis defined and calculated "similarity" using the cosine value between vectors. With a "bag of words" processing approach, the values in each comment vector align with how many times certain vocabulary words show up in that comment. Therefore, comments with similar vocabulary will have similar vectors, and will therefore 'point' in similar directions in hyperspace.
   </p>
   <p>
     The <code>cosine</code> of the angle created between any two comment vectors can indicate how similar their vocabulary is - the smaller the angle between the vectors, the higher the value of the <code>cosine(angle)</code> is (recall that <code>cosine(0) = 1</code>, which is the upper bound of the function's range). Therefore, cosine values near one indicate similarity. Likewise, as the language between comments diverges, that angle becomes larger, and the cosine value moves closer to zero. Because NMF doesn't allow for negative values, the resulting <code>cosine</code> values are bounded between zero and one.
@@ -444,17 +458,17 @@
   <h2><a name="clustering"></a>Clustering Analysis</h2>
 
   <p>
-    The clustering analysis was performed before a sample of comments were labeled to see if there existed an underlying structure within the comment language that separated supporting versus opposing comments. Unfortunately, while the results could loosely support two clusters, the clusters themselves didn't properly distinguish comments by their position. After analyzing the results of a two-cluster KMeans model, it seemed the comments were separated more by topic than position.
+    The clustering analysis was performed before a sample of comments were labeled. The goal was to see if an underlying structure existed in the language used that separated supporting versus opposing comments. Unfortunately, while the results could loosely support two clusters, the clusters themselves didn't properly distinguish comments by their position. After analyzing the results of a two-cluster KMeans model, it seemed the comments were separated more by topic than position.
   </p>
 
   <p>
-    Not surprisingly, the pre-processing choices for how to convert the text into a term-document matrix impacted the clustering results. A KMeans minibatch model was run for all vectorization techniques using a range of two to twelve clusters. The following metrics were used to compare them. The model with the best quantitative results also got a qualitative review of a sample of comments to determine whether the clusters were useful.
+    Not surprisingly, the pre-processing choices for how to convert the text into a term-document matrix impacted the clustering results. A KMeans Minibatch model was run for all vectorization techniques using a range of two to twelve clusters. The following metrics were used to compare them. The model with the best quantitative results also got a qualitative review to determine whether the clustering task successfully separated the comments.
   </p>
 
   <ul>
     <li><span class="bold">Inertia:</span> the total distance of all points from their assigned cluster's centroid. This typically goes down as more clusters are added, and thus is generally used with the "elbow method" to determine the point where the trade-off of adding a new cluster isn't worth the reduction in inertia</li>
     <li><span class="bold">Inertia Times the Number of Clusters:</span> adjusts inertia scores to penalize for more clusters. The minimum of this metric is generally the trade-off point where the reduction in inertia balances with the number of clusters</li>
-    <li><span class="bold">Silhouette Score:</span> a value ranging from -1 to 1 that indicates how separate and tightly packed the clusters are. The calculation compares distances of points to their centroid versus to the next nearest cluster centroid. The more distinct and tight a cluster is, the closer the score is to 1, whereas amorphous, overlapping clusters are in the 0 to -1 range</li>
+    <li><span class="bold">Silhouette Score:</span> a value ranging from -1 to 1 that indicates how separate and tightly packed the clusters are. The calculation compares distances of points to their assigned centroid versus to the next nearest cluster centroid. The more distinct and tight a cluster is, the closer the score is to 1, whereas the more amorphous and overlapping it is, the more it falls in the 0 to -1 range</li>
   </ul>
 
   <p>
@@ -523,6 +537,7 @@
 
   <p>
     TO COME
+    <!-- Count vectorizer outperforms because didn't normalize for length of comments - longer comments had more info? -->
   </p>
 
 
