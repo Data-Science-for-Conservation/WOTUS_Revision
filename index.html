@@ -458,17 +458,17 @@
   <h2><a name="clustering"></a>Clustering Analysis</h2>
 
   <p>
-    The clustering analysis was performed before a sample of comments were labeled to see if there existed an underlying structure within the comment language that separated supporting versus opposing comments. Unfortunately, while the results could loosely support two clusters, the clusters themselves didn't properly distinguish comments by their position. After analyzing the results of a two-cluster KMeans model, it seemed the comments were separated more by topic than position.
+    The clustering analysis was performed before a sample of comments were labeled. The goal was to see if an underlying structure existed in the language used that separated supporting versus opposing comments. Unfortunately, while the results could loosely support two clusters, the clusters themselves didn't properly distinguish comments by their position. After analyzing the results of a two-cluster KMeans model, it seemed the comments were separated more by topic than position.
   </p>
 
   <p>
-    Not surprisingly, the pre-processing choices for how to convert the text into a term-document matrix impacted the clustering results. A KMeans minibatch model was run for all vectorization techniques using a range of two to twelve clusters. The following metrics were used to compare them. The model with the best quantitative results also got a qualitative review of a sample of comments to determine whether the clusters were useful.
+    Not surprisingly, the pre-processing choices for how to convert the text into a term-document matrix impacted the clustering results. A KMeans Minibatch model was run for all vectorization techniques using a range of two to twelve clusters. The following metrics were used to compare them. The model with the best quantitative results also got a qualitative review to determine whether the clustering task successfully separated the comments.
   </p>
 
   <ul>
     <li><span class="bold">Inertia:</span> the total distance of all points from their assigned cluster's centroid. This typically goes down as more clusters are added, and thus is generally used with the "elbow method" to determine the point where the trade-off of adding a new cluster isn't worth the reduction in inertia</li>
     <li><span class="bold">Inertia Times the Number of Clusters:</span> adjusts inertia scores to penalize for more clusters. The minimum of this metric is generally the trade-off point where the reduction in inertia balances with the number of clusters</li>
-    <li><span class="bold">Silhouette Score:</span> a value ranging from -1 to 1 that indicates how separate and tightly packed the clusters are. The calculation compares distances of points to their centroid versus to the next nearest cluster centroid. The more distinct and tight a cluster is, the closer the score is to 1, whereas amorphous, overlapping clusters are in the 0 to -1 range</li>
+    <li><span class="bold">Silhouette Score:</span> a value ranging from -1 to 1 that indicates how separate and tightly packed the clusters are. The calculation compares distances of points to their assigned centroid versus to the next nearest cluster centroid. The more distinct and tight a cluster is, the closer the score is to 1, whereas the more amorphous and overlapping it is, the more it falls in the 0 to -1 range</li>
   </ul>
 
   <p>
