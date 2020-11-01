@@ -6,8 +6,11 @@ body {
 
 h1 {
   font-size: 2em;
-  margin-bottom: 20px;
-  border-bottom: 3px solid #1f78b4;
+}
+
+.subhead {
+  font-size: 0.75em;
+  color: #777;
 }
 
 h2 {
