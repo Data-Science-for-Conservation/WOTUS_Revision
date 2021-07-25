@@ -4,8 +4,8 @@
 
 - **[Project Overview](https://data-science-for-conservation.github.io/WOTUS_Revision/):** project background, challenges, analysis, and conclusions
 - **[Jupyter Notebook](./WOTUS_analysis.ipynb):** source code and underlying analysis
-- **[Deployed Models](#):** (coming soon!) deployed final production models
 - **[NH-Python Meetup Presentation](./NH-Python_Pres/):** slides presented to the NH-Python group in April 2020
+<!-- - **[Deployed Models](#):** (coming soon!) deployed final production models -->
 
 ## Project Overview
 
