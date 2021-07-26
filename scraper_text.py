@@ -12,7 +12,7 @@ Uses Anaconda environment "webby" with Selenium (to load JavaScript on the page
 Notes:
 1) Depending on your system, the scraper may take ~1.5-2 days to run - there
     are over 8,000 comments and the program bakes in sleep time to allow the
-    page to load and to space requests so as not to overload the website
+    page to load and to space requests so as not to overload the site's server
 2) Web scrapers are brittle by nature - changes to the HTML structure of the
     target webpage can break the scraper. Always check that the path to the
     unique element the scraper targets is updated in the script
@@ -26,8 +26,13 @@ import bs4
 
 
 def main():
-    css_sel = '.GIY1LSJIXD > div:nth-child(2)'
+    # CSS Selector on each page that holds the comment text
+    css_sel = 'div.px-2:nth-child(2)'
+
+    # CSV with URL to each comment (downloaded from docket page)
     csv_file_path = './Data/scraper_csv.csv'
+
+    # Where scraper saves comment text as .txt files
     out_path = './Data/Comments/'
 
     # Run the web scraper
@@ -49,8 +54,7 @@ def scrape_comments(csv_file_path, css_sel, out_path):
 
     :return: None
 
-    >>>scrape_comments('./my_csv_data', '.GIY1LSJIXD > div:nth-child(2)',
-        './TextFiles/')
+    >>>scrape_comments('./my_csv_data', 'div:nth-child(2)', './TextFiles/')
     '''
 
     with open(csv_file_path, newline='') as csvfile:
