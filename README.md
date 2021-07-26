@@ -19,7 +19,9 @@ This project analyzes the content of the comments that are publicly available in
 
 ## Data Collection and Analysis
 
-The comments were collected by running a web-scraping program (`./scraper.py`) that builds in ample wait times so as not to overload the website with requests. It looped over all public submissions in the docket that weren't contained in an attachment. This resulted in an unlabeled dataset of just over 8K comments. Once the data were collected, a random sample of 1,200 comments were manually labeled, then a variety of Natural Language Processing (NLP) techniques were applied.
+The comments were collected by running a web-scraping program that builds in ample wait times so as not to overload the website with requests. It looped over all public submissions in the docket that weren't contained in an attachment. This resulted in an unlabeled dataset of just over 8K comments. Once the data were collected, a random sample of 1,200 comments were manually labeled, then a variety of Natural Language Processing (NLP) techniques were applied.
+
+There are two versions of the web scraper, 1) `scraper_text.py` saves each comment into a text file with the ID as the file name, and 2) `scraper_db.py` saves each comment and ID into a local SQLite database. If you're planning to run it, choose the version that suits your needs. The data was originally collected via the text file version, hence the notebook code accumulates them that way, but is easily modified to accommodate a database file.
 
 ## Setting Up the Local Environment
 
