@@ -43,7 +43,7 @@ def main():
 
     # Create table statement
     sql_create_table = """CREATE TABLE IF NOT EXISTS comments (
-                              "Document ID" text PRIMARY KEY,
+                              ID text PRIMARY KEY,
                               Comment text
                           );"""
 
